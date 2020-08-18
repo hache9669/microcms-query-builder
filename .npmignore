@@ -1,0 +1,7 @@
+.vscode/
+.editorconfig
+.eslintrc.json
+.prettierrc
+tsconfig.json
+test/
+src/
