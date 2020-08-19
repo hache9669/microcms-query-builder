@@ -2,6 +2,7 @@
 .editorconfig
 .eslintrc.json
 .prettierrc
+.travis.yml
 tsconfig.json
 test/
 src/

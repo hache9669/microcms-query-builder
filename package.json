@@ -3,10 +3,12 @@
   "version": "0.3.0",
   "description": "",
   "main": "index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --ext .ts --fix",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "tsc"
   },
   "repository": {
     "type": "git",
