@@ -4,7 +4,7 @@ import { Comparator } from "./IBuilder";
  * microCMS list endpoint
  * GET /api/v1/{endpoint}?{query.toString()}
  */
-export default interface IQuery<T> {
+export default interface IMicroCMSQuery<T> {
     draftKey?: string;
     limit?: number;
     offset?: number;
@@ -17,6 +17,8 @@ export default interface IQuery<T> {
     ids?: string[];
     filters?: ICondition<T>;
     depth?: 1 | 2 | 3;
+
+    toString: () => string;
 }
 
 export interface ISingleCondition<T, K extends keyof T = keyof T> {
@@ -59,5 +61,7 @@ const condition: ICondition<SampleInterface> = {
             comparator: "=",
             value: "fuga",
         },
+        operator: "AND",
     },
+    operator: "OR",
 };
