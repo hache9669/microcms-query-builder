@@ -14,14 +14,14 @@ const builder: IBuilder<SampleInterface> = new Builder<SampleInterface>();
  * シンプルなクエリ(LINQ風)のテスト
  */
 describe("query like LINQ", (): void => {
-    const b = builder.start().isEqualTo("num", 1).isNotEqualTo("str", "hoge");
+    const b = builder.start().equals("num", 1).notEquals("str", "hoge");
     const expectCriteria = "num[equal]1,str[notEqual]hoge";
 
     test("toFilter", () => {
-        expect(b.toFilter()).toEqual({ filter: expectCriteria });
+        expect(b.toQuery()).toEqual({ filter: expectCriteria });
     });
     test("toQuery", () => {
-        expect(b.toQuery()).toEqual("filter=" + expectCriteria);
+        expect(b.toQuery().toString()).toEqual("filter=" + expectCriteria);
     });
 });
 
@@ -33,10 +33,10 @@ describe("query like LINQ", (): void => {
     const expectCriteria = "num[equal]1";
 
     test("toFilter", () => {
-        expect(b.toFilter()).toEqual({ filter: expectCriteria });
+        expect(b.toQuery()).toEqual({ filter: expectCriteria });
     });
     test("toQuery", () => {
-        expect(b.toQuery()).toEqual("filter=" + expectCriteria);
+        expect(b.toQuery().toString()).toEqual("filter=" + expectCriteria);
     });
 });
 
@@ -58,9 +58,9 @@ describe("query like LINQ", (): void => {
         "(num[equal]1[or]str[equal]hoge)[and](num[equal]3[or]str[equal]fuga)";
 
     test("toFilter", () => {
-        expect(b.toFilter()).toEqual({ filter: expectCriteria });
+        expect(b.toQuery()).toEqual({ filter: expectCriteria });
     });
     test("toQuery", () => {
-        expect(b.toQuery()).toEqual("filter=" + expectCriteria);
+        expect(b.toQuery().toString()).toEqual("filter=" + expectCriteria);
     });
 });
