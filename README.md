@@ -1,9 +1,12 @@
-[![Build Status](https://travis-ci.org/hache9669/my-first-npm-module.svg?branch=master)](https://travis-ci.org/hache9669/my-first-npm-module)
-[![npm version](http://img.shields.io/npm/v/@hache9669/my-first-npm-module)](https://www.npmjs.com/package/@hache9669/my-first-npm-module)
-[![npm downloads](https://img.shields.io/npm/dt/@hache9669/my-first-npm-module)](https://www.npmjs.com/package/@hache9669/my-first-npm-module)
+[![Build Status](https://travis-ci.org/hache9669/microCMS-filter.svg?branch=master)](https://travis-ci.org/hache9669/my-first-npm-module)
+[![npm version](http://img.shields.io/npm/v/microCMS-filter)](https://www.npmjs.com/package/@hache9669/my-first-npm-module)
+[![npm downloads](https://img.shields.io/npm/dt/microCMS-filter)](https://www.npmjs.com/package/@hache9669/my-first-npm-module)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-# @hache9669/my-first-npm-module
+# microCMS-filter
+## usage
+tbw
+
 ## Ref.
 - [初めてのnpm パッケージ公開](https://qiita.com/TsutomuNakamura/items/f943e0490d509f128ae2)
   - 全体の流れを掴むのに🙆
