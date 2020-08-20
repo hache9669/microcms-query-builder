@@ -1,5 +1,3 @@
-import IQuery from "./IQuery";
-
 export type Comparator = "=" | "<" | ">"; // and more
 
 export default interface IBuilder<T> {
