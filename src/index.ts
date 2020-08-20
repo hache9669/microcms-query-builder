@@ -1,5 +1,8 @@
-import IBuilder, { Comparator } from "./interface";
+import IBuilder, { Comparator } from "./types/IBuilder";
+import IQuery from "./types/IQuery";
 export default class Builder<T> implements IBuilder<T> {
+    private _query: IQuery<T> = {};
+
     public isEqualTo<K extends keyof T = keyof T>(
         propName: keyof T,
         value: T[K]

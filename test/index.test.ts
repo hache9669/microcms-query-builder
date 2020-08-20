@@ -1,5 +1,5 @@
 import Builder from "../src";
-import IBuilder from "../src/interface";
+import IBuilder from "../src/types/IBuilder";
 
 interface SampleInterface {
     num: number;
