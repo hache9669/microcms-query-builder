@@ -31,8 +31,6 @@ export default interface IBuilder<T> {
     ): IBuilder<T>;
     whereOr<K extends keyof T>(query: Query<T>): IBuilder<T>;
 
-    // 初期化？インスタンス作成？ いずれにせよ、都度newしたくはないような…
-    start(): IBuilder<T>;
     toQuery(): IMicroCMSQuery<T>;
 }
 
