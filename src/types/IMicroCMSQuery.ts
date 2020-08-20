@@ -4,59 +4,67 @@ import { Comparator } from "./IBuilder";
  * microCMS list endpoint
  * GET /api/v1/{endpoint}?{query.toString()}
  */
-export default interface IMicroCMSQuery<T> {
+export default interface IMicroCMSQuery<Schema> {
     draftKey?: string;
     limit?: number;
     offset?: number;
-    orders?: {
-        field: Field<T>;
-        sort: "asc" | "desc";
-    }[];
+    orders?: Order<Schema>[];
     q?: string;
-    fields?: Field<T>[];
+    fields?: Array<keyof Schema>;
     ids?: string[];
-    filters?: ICondition<T>;
+    filters?: ICondition<Schema>;
     depth?: 1 | 2 | 3;
 
     toString: () => string;
 }
 
-export interface ISingleCondition<T, K extends keyof T = keyof T> {
-    field: Field<T>;
-    comparator: Comparator;
-    value: T[K];
+export interface Order<Schema> {
+    field: keyof Schema;
+    sort: "asc" | "desc";
 }
 
-export type ICondition<T> =
-    | ISingleCondition<T>
-    | {
-          left: ICondition<T>;
-          right: ICondition<T>;
-          operator: "AND" | "OR";
-      };
+export interface ISingleCondition<Schema, PropName extends keyof Schema> {
+    type: "SINGLE";
+    field: PropName;
+    comparator: Comparator;
+    value: Schema[PropName]; // @TODO
+}
 
-export type Field<T> = keyof T;
+export interface IMultipleCondition<Schema> {
+    type: "MULTI";
+    left: ICondition<Schema>;
+    right: ICondition<Schema>;
+    operator: "and" | "or";
+}
+
+export type ICondition<Schema> =
+    | ISingleCondition<Schema, keyof Schema>
+    | IMultipleCondition<Schema>;
 
 interface SampleInterface {
     num: number;
     str: string;
     bol: boolean;
-    obj: { prop: any };
 }
 
 const condition: ICondition<SampleInterface> = {
+    type: "MULTI",
     left: {
+        type: "SINGLE",
         field: "bol",
         comparator: "=",
         value: "hoge",
     },
     right: {
+        type: "MULTI",
         left: {
+            type: "SINGLE",
             field: "bol",
             comparator: "=",
-            value: false,
+            value: 1, // @FIXME want to be shown as transpile error
         },
         right: {
+            type: "SINGLE",
             field: "num",
             comparator: "=",
             value: "fuga",

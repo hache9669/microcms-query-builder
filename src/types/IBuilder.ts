@@ -1,39 +1,54 @@
+import { Comparator } from "../Comparator";
 import IMicroCMSQuery from "./IMicroCMSQuery";
 
-export type Comparator = "=" | "<" | ">"; // and more
+export default interface IBuilder<Schema> {
+    equals<PropName extends keyof Schema>(
+        propName: PropName,
+        value: Schema[PropName]
+    ): IBuilder<Schema>;
 
-export default interface IBuilder<T> {
-    equals<K extends keyof T>(propName: K, value: T[K]): IBuilder<T>;
+    notEquals<PropName extends keyof Schema>(
+        propName: PropName,
+        value: Schema[PropName]
+    ): IBuilder<Schema>;
 
-    notEquals<K extends keyof T>(propName: K, value: T[K]): IBuilder<T>;
+    lessThan<PropName extends keyof Schema>(
+        propName: PropName,
+        value: Schema[PropName]
+    ): IBuilder<Schema>;
 
-    lessThan<K extends keyof T>(propName: K, value: T[K]): IBuilder<T>;
+    greaterThan<PropName extends keyof Schema>(
+        propName: PropName,
+        value: Schema[PropName]
+    ): IBuilder<Schema>;
 
-    greaterThan<K extends keyof T>(propName: K, value: T[K]): IBuilder<T>;
+    contains<PropName extends keyof Schema>(
+        propName: PropName,
+        value: Schema[PropName]
+    ): IBuilder<Schema>;
 
-    contains<K extends keyof T>(propName: K, value: T[K]): IBuilder<T>;
+    exists(propName: keyof Schema): IBuilder<Schema>;
 
-    exists<K extends keyof T>(propName: keyof T): IBuilder<T>;
+    beginsWith<PropName extends keyof Schema>(
+        propName: PropName,
+        value: Schema[PropName]
+    ): IBuilder<Schema>;
 
-    beginsWith<K extends keyof T>(propName: K, value: T[K]): IBuilder<T>;
-
-    where<K extends keyof T>(
-        propName: K,
+    where<PropName extends keyof Schema>(
+        propName: PropName,
         comparator: Comparator,
-        value: T[K]
-    ): IBuilder<T>;
-    where<K extends keyof T>(query: Query<T>): IBuilder<T>;
+        value: Schema[PropName]
+    ): IBuilder<Schema>;
+    where(query: Query<Schema>): IBuilder<Schema>;
 
-    whereOr<K extends keyof T>(
-        propName: K,
+    whereOr<PropName extends keyof Schema>(
+        propName: PropName,
         comparator: Comparator,
-        value: T[K]
-    ): IBuilder<T>;
-    whereOr<K extends keyof T>(query: Query<T>): IBuilder<T>;
+        value: Schema[PropName]
+    ): IBuilder<Schema>;
+    whereOr(query: Query<Schema>): IBuilder<Schema>;
 
-    // 初期化？インスタンス作成？ いずれにせよ、都度newしたくはないような…
-    start(): IBuilder<T>;
-    toQuery(): IMicroCMSQuery<T>;
+    toQuery(): IMicroCMSQuery<Schema>;
 }
 
-export type Query<T> = (b: IBuilder<T>) => IBuilder<T>;
+export type Query<Schema> = (b: IBuilder<Schema>) => IBuilder<Schema>;
