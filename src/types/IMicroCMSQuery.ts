@@ -4,44 +4,41 @@ import { Comparator } from "./IBuilder";
  * microCMS list endpoint
  * GET /api/v1/{endpoint}?{query.toString()}
  */
-export default interface IMicroCMSQuery<T> {
+export default interface IMicroCMSQuery<Schema> {
     draftKey?: string;
     limit?: number;
     offset?: number;
     orders?: {
-        field: Field<T>;
+        field: keyof Schema;
         sort: "asc" | "desc";
     }[];
     q?: string;
-    fields?: Field<T>[];
+    fields?: Array<keyof Schema>;
     ids?: string[];
-    filters?: ICondition<T>;
+    filters?: ICondition<Schema>;
     depth?: 1 | 2 | 3;
 
     toString: () => string;
 }
 
-export interface ISingleCondition<T, K extends keyof T = keyof T> {
-    field: Field<T>;
+interface ISingleCondition<Schema, PropName extends keyof Schema> {
+    field: PropName;
     comparator: Comparator;
-    value: T[K];
+    value: Schema[PropName]; // @TODO
 }
 
-export type ICondition<T> =
-    | ISingleCondition<T>
+type ICondition<Schema> =
+    | ISingleCondition<Schema, keyof Schema>
     | {
-          left: ICondition<T>;
-          right: ICondition<T>;
+          left: ICondition<Schema>;
+          right: ICondition<Schema>;
           operator: "AND" | "OR";
       };
-
-export type Field<T> = keyof T;
 
 interface SampleInterface {
     num: number;
     str: string;
     bol: boolean;
-    obj: { prop: any };
 }
 
 const condition: ICondition<SampleInterface> = {
@@ -54,7 +51,7 @@ const condition: ICondition<SampleInterface> = {
         left: {
             field: "bol",
             comparator: "=",
-            value: false,
+            value: 1, // @FIXME want to be shown as transpile error
         },
         right: {
             field: "num",
