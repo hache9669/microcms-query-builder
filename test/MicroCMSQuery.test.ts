@@ -66,6 +66,7 @@ describe("test MicroCMSQuery class", () => {
         test("offset", () => {
             query.offset = 0;
             expect(query.toString()).toEqual("offset=0");
+            // @TODO microCMSの仕様と合致しているか確認
         });
         test("orders", () => {
             query.orders = [];
@@ -95,6 +96,18 @@ describe("test MicroCMSQuery class", () => {
     });
 
     describe("toString with simple query which has invalid value", () => {
+        test("limit", () => {
+            query.limit = -1;
+            expect(query.toString()).toEqual("");
+            // @TODO microCMSの仕様と合致しているか確認
+        });
+
+        test("offset", () => {
+            query.offset = -1;
+            expect(query.toString()).toEqual("");
+            // @TODO microCMSの仕様と合致しているか確認
+        });
+
         test("ids", () => {
             query.ids = Array(101).map((_, index) => String(index));
             expect(query.toString()).toEqual("");
@@ -107,6 +120,10 @@ describe("test MicroCMSQuery class", () => {
     });
 
     describe("toString with invalid pairs of queries", () => {
+        // @TODO tbw
+    });
+
+    describe("toString with duplicate values", () => {
         // @TODO tbw
     });
 });
