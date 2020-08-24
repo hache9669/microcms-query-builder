@@ -1,6 +1,12 @@
 import * as qs from "query-string";
 
-import IMicroCMSQuery, { ICondition, Order } from "./types/IMicroCMSQuery";
+import { Comparator } from "./types/IBuilder";
+import IMicroCMSQuery, {
+    ICondition,
+    IMultipleCondition,
+    ISingleCondition,
+    Order,
+} from "./types/IMicroCMSQuery";
 
 export default class MicroCMSQuery<T> implements IMicroCMSQuery<T> {
     private _draftKey?: string;
@@ -12,6 +18,12 @@ export default class MicroCMSQuery<T> implements IMicroCMSQuery<T> {
     private _ids?: string[];
     private _filters?: ICondition<T>;
     private _depth?: 1 | 2 | 3;
+
+    private comparatorMap = new Map<Comparator, string>([
+        ["=", "equal"],
+        ["<", "less_than"],
+        [">", "greater_than"],
+    ]);
 
     public get draftKey(): string | undefined {
         return this._draftKey;
@@ -107,9 +119,42 @@ export default class MicroCMSQuery<T> implements IMicroCMSQuery<T> {
             ids: this._ids?.filter(
                 (id, index, self) => self.indexOf(id) === index
             ),
-            filters: undefined,
+            filters: this.filtersToString(this._filters),
             depth: this._depth,
         };
-        return qs.stringify(queryObject, { arrayFormat: "comma" });
+        return qs.stringify(queryObject, {
+            arrayFormat: "comma",
+            encode: false,
+        });
     };
+
+    private filtersToString: (
+        condition?: ICondition<T>
+    ) => string | undefined = (condition?: ICondition<T>) => {
+        if (!condition) {
+            // filter is empty
+            return undefined;
+        }
+
+        if (this.isMultipleCondition(condition)) {
+            // filter is ICondition
+            const left = this.filtersToString(condition.left);
+            const right = this.filtersToString(condition.right);
+            return `(${left})[${condition.operator}](${right})`;
+        }
+
+        if (this.isSingleCondition(condition)) {
+            // filter is ISingleCondition
+            return `${condition.field}[${this.comparatorMap.get(
+                condition.comparator
+            )}]${condition.value}`;
+        }
+    };
+
+    private isMultipleCondition = (
+        arg: ICondition<T>
+    ): arg is IMultipleCondition<T> => arg.type === "MULTI";
+    private isSingleCondition = <U extends keyof T>(
+        arg: ICondition<T>
+    ): arg is ISingleCondition<T, U> => arg.type === "SINGLE";
 }

@@ -46,6 +46,7 @@ describe("test MicroCMSQuery class", () => {
         });
         test("filters", () => {
             const filters: ICondition<SampleInterface> = {
+                type: "SINGLE",
                 field: "num",
                 comparator: "=",
                 value: 3,

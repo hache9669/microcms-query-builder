@@ -23,19 +23,23 @@ export interface Order<Schema> {
     sort: "asc" | "desc";
 }
 
-interface ISingleCondition<Schema, PropName extends keyof Schema> {
+export interface ISingleCondition<Schema, PropName extends keyof Schema> {
+    type: "SINGLE";
     field: PropName;
     comparator: Comparator;
     value: Schema[PropName]; // @TODO
 }
 
+export interface IMultipleCondition<Schema> {
+    type: "MULTI";
+    left: ICondition<Schema>;
+    right: ICondition<Schema>;
+    operator: "and" | "or";
+}
+
 export type ICondition<Schema> =
     | ISingleCondition<Schema, keyof Schema>
-    | {
-          left: ICondition<Schema>;
-          right: ICondition<Schema>;
-          operator: "AND" | "OR";
-      };
+    | IMultipleCondition<Schema>;
 
 interface SampleInterface {
     num: number;
@@ -44,18 +48,23 @@ interface SampleInterface {
 }
 
 const condition: ICondition<SampleInterface> = {
+    type: "MULTI",
     left: {
+        type: "SINGLE",
         field: "bol",
         comparator: "=",
         value: "hoge",
     },
     right: {
+        type: "MULTI",
         left: {
+            type: "SINGLE",
             field: "bol",
             comparator: "=",
             value: 1, // @FIXME want to be shown as transpile error
         },
         right: {
+            type: "SINGLE",
             field: "num",
             comparator: "=",
             value: "fuga",
