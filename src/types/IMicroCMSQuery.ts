@@ -27,7 +27,7 @@ interface ISingleCondition<Schema, PropName extends keyof Schema> {
     value: Schema[PropName]; // @TODO
 }
 
-type ICondition<Schema> =
+export type ICondition<Schema> =
     | ISingleCondition<Schema, keyof Schema>
     | {
           left: ICondition<Schema>;
