@@ -8,10 +8,7 @@ export default interface IMicroCMSQuery<Schema> {
     draftKey?: string;
     limit?: number;
     offset?: number;
-    orders?: {
-        field: keyof Schema;
-        sort: "asc" | "desc";
-    }[];
+    orders?: Order<Schema>[];
     q?: string;
     fields?: Array<keyof Schema>;
     ids?: string[];
@@ -19,6 +16,11 @@ export default interface IMicroCMSQuery<Schema> {
     depth?: 1 | 2 | 3;
 
     toString: () => string;
+}
+
+export interface Order<Schema> {
+    field: keyof Schema;
+    sort: "asc" | "desc";
 }
 
 interface ISingleCondition<Schema, PropName extends keyof Schema> {

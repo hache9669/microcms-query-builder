@@ -1,5 +1,5 @@
 import MicroCMSQuery from "../src/MicroCMSQuery";
-import IMicroCMSQuery from "../src/types/IMicroCMSQuery";
+import IMicroCMSQuery, { ICondition } from "../src/types/IMicroCMSQuery";
 
 interface SampleInterface {
     num: number;
@@ -45,7 +45,13 @@ describe("test MicroCMSQuery class", () => {
             expect(query.toString()).toEqual("ids=some_id1,some_id2");
         });
         test("filters", () => {
-            throw new Error("test not written");
+            const filters: ICondition<SampleInterface> = {
+                field: "num",
+                comparator: "=",
+                value: 3,
+            };
+            query.filters = filters;
+            expect(query.toString()).toEqual("filters=num[equal]3");
         });
         test("depth", () => {
             query.depth = 3;
@@ -86,9 +92,6 @@ describe("test MicroCMSQuery class", () => {
             expect(query.toString()).toEqual("");
             // @TODO microCMSの仕様と合致しているか確認
         });
-        test("filters", () => {
-            throw new Error("test not written");
-        });
         test("depth", () => {
             query.depth = 1;
             expect(query.toString()).toEqual("depth=1");
@@ -116,14 +119,36 @@ describe("test MicroCMSQuery class", () => {
     });
 
     describe("toString with pairs of queries", () => {
-        // @TODO tbw
-    });
-
-    describe("toString with invalid pairs of queries", () => {
-        // @TODO tbw
+        test("three queries", () => {
+            query.draftKey = "some_draft_key";
+            query.limit = 10;
+            query.offset = 10;
+            expect(query.toString()).toEqual(
+                "draftKey=some_draft_key&limit=10&offset=10"
+            );
+        });
     });
 
     describe("toString with duplicate values", () => {
-        // @TODO tbw
+        test("orders", () => {
+            query.orders = [
+                { field: "num", sort: "asc" },
+                { field: "num", sort: "desc" },
+            ];
+            expect(query.toString()).toEqual("orders=num");
+            // @TODO microCMSの仕様と合致しているか確認
+        });
+
+        test("fields", () => {
+            query.fields = ["num", "num", "str"];
+            expect(query.toString()).toEqual("fields=num,str");
+            // @TODO microCMSの仕様と合致しているか確認
+        });
+
+        test("ids", () => {
+            query.ids = ["some_id1", "some_id1"];
+            expect(query.toString()).toEqual("ids=some_id1");
+            // @TODO microCMSの仕様と合致しているか確認
+        });
     });
 });

@@ -1,6 +1,6 @@
 import * as qs from "query-string";
 
-import IMicroCMSQuery, { ICondition } from "./types/IMicroCMSQuery";
+import IMicroCMSQuery, { ICondition, Order } from "./types/IMicroCMSQuery";
 
 export default class MicroCMSQuery<T> implements IMicroCMSQuery<T> {
     private _draftKey?: string;
@@ -91,12 +91,22 @@ export default class MicroCMSQuery<T> implements IMicroCMSQuery<T> {
                 undefined !== this._offset && this._offset >= 0
                     ? this._offset
                     : undefined,
-            orders: this._orders?.map(
-                (order) => `${order.sort === "desc" ? "-" : ""}${order.field}`
-            ),
+            orders: this._orders
+                ?.filter(
+                    (order, index, self) =>
+                        self.findIndex((o) => o.field === order.field) === index
+                )
+                .map(
+                    (order: Order<T>) =>
+                        `${order.sort === "desc" ? "-" : ""}${order.field}`
+                ),
             q: this._q?.length ? this._q : undefined,
-            fields: this._fields,
-            ids: this._ids,
+            fields: this._fields?.filter(
+                (field, index, self) => self.indexOf(field) === index
+            ),
+            ids: this._ids?.filter(
+                (id, index, self) => self.indexOf(id) === index
+            ),
             filters: undefined,
             depth: this._depth,
         };
