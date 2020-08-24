@@ -82,16 +82,18 @@ export default class MicroCMSQuery<T> implements IMicroCMSQuery<T> {
 
     public toString: () => string = () => {
         const queryObject = {
-            draftKey: this._draftKey,
+            draftKey: this._draftKey?.length ? this._draftKey : undefined,
             limit: this._limit,
             offset: this._offset,
-            orders: undefined,
-            q: this._q,
+            orders: this._orders?.map(
+                (order) => `${order.sort === "desc" ? "-" : ""}${order.field}`
+            ),
+            q: this._q?.length ? this._q : undefined,
             fields: this._fields,
             ids: this._ids,
             filters: undefined,
             depth: this._depth,
         };
-        return qs.stringify(queryObject);
+        return qs.stringify(queryObject, { arrayFormat: "comma" });
     };
 }
