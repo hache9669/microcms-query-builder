@@ -1,4 +1,4 @@
-import { Comparator } from "./IBuilder";
+import { Comparator } from "../Comparator";
 
 /**
  * microCMS list endpoint
@@ -69,7 +69,7 @@ const condition: ICondition<SampleInterface> = {
             comparator: "=",
             value: "fuga",
         },
-        operator: "AND",
+        operator: "and",
     },
-    operator: "OR",
+    operator: "or",
 };
