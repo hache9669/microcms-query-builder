@@ -52,7 +52,7 @@ describe("test MicroCMSQuery class", () => {
                 value: 3,
             };
             query.filters = filters;
-            expect(query.toString()).toEqual("filters=num[equal]3");
+            expect(query.toString()).toEqual("filters=num[equals]3");
         });
         test("depth", () => {
             query.depth = 3;

@@ -1,6 +1,5 @@
+import { Comparator } from "../Comparator";
 import IMicroCMSQuery from "./IMicroCMSQuery";
-
-export type Comparator = "=" | "<" | ">"; // and more
 
 export default interface IBuilder<Schema> {
     equals<PropName extends keyof Schema>(

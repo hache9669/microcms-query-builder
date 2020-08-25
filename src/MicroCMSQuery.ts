@@ -1,6 +1,6 @@
 import * as qs from "query-string";
 
-import { Comparator } from "./types/IBuilder";
+import * as Comparator from "./Comparator";
 import IMicroCMSQuery, {
     ICondition,
     IMultipleCondition,
@@ -18,12 +18,6 @@ export default class MicroCMSQuery<T> implements IMicroCMSQuery<T> {
     private _ids?: string[];
     private _filters?: ICondition<T>;
     private _depth?: 1 | 2 | 3;
-
-    private comparatorMap = new Map<Comparator, string>([
-        ["=", "equal"],
-        ["<", "less_than"],
-        [">", "greater_than"],
-    ]);
 
     public get draftKey(): string | undefined {
         return this._draftKey;
@@ -145,7 +139,7 @@ export default class MicroCMSQuery<T> implements IMicroCMSQuery<T> {
 
         if (this.isSingleCondition(condition)) {
             // filter is ISingleCondition
-            return `${condition.field}[${this.comparatorMap.get(
+            return `${condition.field}[${Comparator.toString(
                 condition.comparator
             )}]${condition.value}`;
         }
