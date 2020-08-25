@@ -28,6 +28,7 @@ export default interface IBuilder<Schema> {
     ): IBuilder<Schema>;
 
     exists(propName: keyof Schema): IBuilder<Schema>;
+    notExists(propName: keyof Schema): IBuilder<Schema>;
 
     beginsWith<PropName extends keyof Schema>(
         propName: PropName,
