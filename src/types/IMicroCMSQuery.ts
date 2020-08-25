@@ -1,8 +1,4 @@
-import {
-    Comparator,
-    MultiArgComparator,
-    SingleArgComparator,
-} from "../Comparator";
+import { MultiArgComparator, SingleArgComparator } from "../Comparator";
 
 /**
  * microCMS list endpoint
