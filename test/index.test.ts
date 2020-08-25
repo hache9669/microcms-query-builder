@@ -1,4 +1,4 @@
-import Builder from "../src";
+import Builder from "../src/Builder";
 import SampleInterface from "./interface";
 
 describe("complex query", (): void => {

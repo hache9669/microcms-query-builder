@@ -1,4 +1,12 @@
-export type Comparator =
+export type Comparator = SingleArgComparator | MultiArgComparator;
+
+export type SingleArgComparator =
+    | "EXISTS"
+    | "exists"
+    | "NOT_EXISTS"
+    | "not_exists";
+
+export type MultiArgComparator =
     | "="
     | "EQUALS"
     | "equals"
@@ -13,10 +21,6 @@ export type Comparator =
     | "less_than"
     | "CONTAINS"
     | "contains"
-    | "EXISTS"
-    | "exists"
-    | "NOT_EXISTS"
-    | "not_exists"
     | "BEGINS_WITH"
     | "begins_with";
 

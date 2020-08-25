@@ -1,4 +1,4 @@
-import { Comparator } from "./IBuilder";
+import { MultiArgComparator, SingleArgComparator } from "../Comparator";
 
 /**
  * microCMS list endpoint
@@ -23,12 +23,19 @@ export interface Order<Schema> {
     sort: "asc" | "desc";
 }
 
-export interface ISingleCondition<Schema, PropName extends keyof Schema> {
-    type: "SINGLE";
-    field: PropName;
-    comparator: Comparator;
-    value: Schema[PropName]; // @TODO
-}
+export type ISingleCondition<Schema, PropName extends keyof Schema> =
+    | {
+          type: "SINGLE";
+          field: PropName;
+          comparator: MultiArgComparator;
+          value: Schema[PropName]; // @TODO
+      }
+    | {
+          type: "SINGLE";
+          field: PropName;
+          comparator: SingleArgComparator;
+          value?: undefined;
+      };
 
 export interface IMultipleCondition<Schema> {
     type: "MULTI";
@@ -40,6 +47,31 @@ export interface IMultipleCondition<Schema> {
 export type ICondition<Schema> =
     | ISingleCondition<Schema, keyof Schema>
     | IMultipleCondition<Schema>;
+
+export const isCondition = <T>(arg: any): arg is ICondition<T> => {
+    return isMultipleCondition(arg) || isSingleCondition(arg);
+};
+
+export const isMultipleCondition = <T>(
+    arg: any
+): arg is IMultipleCondition<T> => {
+    return (
+        arg.type === "MULTI" &&
+        isCondition(arg.left) &&
+        isCondition(arg.right) &&
+        ["and", "or"].indexOf(arg.operator) !== -1
+    );
+};
+
+export const isSingleCondition = <T, K extends keyof T>(
+    arg: any
+): arg is ISingleCondition<T, K> => {
+    return (
+        arg.type === "SINGLE" &&
+        typeof arg.field === "string" &&
+        typeof arg.comparator === "string"
+    );
+};
 
 interface SampleInterface {
     num: number;
@@ -69,7 +101,7 @@ const condition: ICondition<SampleInterface> = {
             comparator: "=",
             value: "fuga",
         },
-        operator: "AND",
+        operator: "and",
     },
-    operator: "OR",
+    operator: "or",
 };
