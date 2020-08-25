@@ -1,4 +1,5 @@
-import IBuilder, { Comparator, Query } from "./types/IBuilder";
+import { Comparator } from "./Comparator";
+import IBuilder, { Query } from "./types/IBuilder";
 import IMicroCMSQuery from "./types/IMicroCMSQuery";
 
 export default class Builder<T> implements IBuilder<T> {
