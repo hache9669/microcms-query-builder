@@ -71,7 +71,7 @@ export default class Builder<Schema> implements IBuilder<Schema> {
         propName: PropName,
         value: Schema[PropName]
     ): IBuilder<Schema> {
-        this.addCondition(propName, Builder.Equal, value);
+        this.addCondition(propName, Builder.BeginsWith, value);
         return this;
     }
 
