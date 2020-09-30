@@ -37,7 +37,7 @@
     "prettier": "^2.0.5",
     "query-string": "^6.13.1",
     "ts-jest": "^26.2.0",
-    "type-fest": "^0.16.0",
+    "type-fest": "^0.17.0",
     "typescript": "^3.9.7"
   }
 }
