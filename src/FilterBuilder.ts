@@ -1,3 +1,5 @@
+import * as moment from "moment";
+
 import * as Comparator from "./Comparator";
 import MicroCMSQuery from "./MicroCMSQuery";
 import IFilterBuilder, { Query } from "./types/IFilterBuilder";
@@ -23,6 +25,12 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
         propName: PropName,
         value: Schema[PropName]
     ): IFilterBuilder<Schema> {
+        if (this.isUnProcessableObject(value)) {
+            throw new Error(
+                this.createErrorMessage("notEquals", this.InvalidArg)
+            );
+        }
+
         this.addCondition(propName, FilterBuilder.NotEqual, value);
         return this;
     }
@@ -30,6 +38,12 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
         propName: PropName,
         value: Schema[PropName]
     ): IFilterBuilder<Schema> {
+        if (this.isUnProcessableObject(value)) {
+            throw new Error(
+                this.createErrorMessage("lessThan", this.InvalidArg)
+            );
+        }
+
         this.addCondition(propName, FilterBuilder.LessThan, value);
         return this;
     }
@@ -37,6 +51,12 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
         propName: PropName,
         value: Schema[PropName]
     ): IFilterBuilder<Schema> {
+        if (this.isUnProcessableObject(value)) {
+            throw new Error(
+                this.createErrorMessage("greaterThan", this.InvalidArg)
+            );
+        }
+
         this.addCondition(propName, FilterBuilder.GreaterThan, value);
         return this;
     }
@@ -47,6 +67,12 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
         this.addCondition(propName, FilterBuilder.Contains, value);
         return this;
     }
+    /**
+     * @TODO プロパティの型が取得できないため、「コンテンツ参照では利用できない」が表現できない
+     * mapped typeを用いてビルダーを定義し直す？←メソッドチェインができない…
+     * builder.model.arr.exists() // type error
+     * @param propName
+     */
     public exists<PropName extends keyof Schema>(
         propName: PropName
     ): IFilterBuilder<Schema> {
@@ -176,4 +202,14 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
     public static Exists: Comparator.SingleArgComparator = "exists";
     public static NotExists: Comparator.SingleArgComparator = "not_exists";
     public static BeginsWith: Comparator.MultiArgComparator = "begins_with";
+
+    private isUnProcessableObject = (arg: any) =>
+        typeof arg === "object" &&
+        !moment.isMoment(arg) &&
+        !(arg instanceof Date);
+
+    private createErrorMessage = (caller: string, message: string): string => {
+        return `${this.constructor.name}.${caller}: ${message}`;
+    };
+    private InvalidArg = "invalid argument; value must to be primitive.";
 }
