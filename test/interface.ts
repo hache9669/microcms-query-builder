@@ -8,6 +8,6 @@ export default interface SampleInterface extends ISchema {
     bol: boolean;
     dat: Date;
     mom: moment.Moment;
-    obj: { id: string; [p: string]: any };
-    arr: Array<{ id: string; [p: string]: any }>;
+    obj: { id: string; [p: string]: string | number | boolean };
+    arr: Array<{ id: string; [p: string]: string | number | boolean }>;
 }

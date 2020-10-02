@@ -6,7 +6,10 @@ export type SingleArgComparator =
     | "NOT_EXISTS"
     | "not_exists";
 
-export const isSingleArgComparator = (arg: any): arg is SingleArgComparator =>
+export const isSingleArgComparator = (
+    arg: unknown
+): arg is SingleArgComparator =>
+    typeof arg === "string" &&
     ["EXISTS", "exists", "NOT_EXISTS", "not_exists"].indexOf(arg) !== -1;
 
 export type MultiArgComparator =
@@ -27,7 +30,8 @@ export type MultiArgComparator =
     | "BEGINS_WITH"
     | "begins_with";
 
-export const isMultiArgComparator = (arg: any): arg is MultiArgComparator =>
+export const isMultiArgComparator = (arg: unknown): arg is MultiArgComparator =>
+    typeof arg === "string" &&
     [
         "=",
         "EQUALS",

@@ -1,5 +1,5 @@
 import FilterBuilder from "../src/FilterBuilder";
-import IMicroCMSQuery, { ICondition } from "../src/types/IMicroCMSQuery";
+import { ICondition } from "../src/types/IMicroCMSQuery";
 import SampleInterface from "./interface";
 
 describe("complex query", (): void => {
