@@ -1,55 +1,59 @@
 import { Comparator } from "../Comparator";
-import IMicroCMSQuery from "./IMicroCMSQuery";
+import IMicroCMSQuery, { ICondition } from "./IMicroCMSQuery";
 
-export default interface IBuilder<Schema> {
+export default interface IFilterBuilder<Schema> {
     equals<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema>;
+    ): IFilterBuilder<Schema>;
 
     notEquals<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema>;
+    ): IFilterBuilder<Schema>;
 
     lessThan<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema>;
+    ): IFilterBuilder<Schema>;
 
     greaterThan<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema>;
+    ): IFilterBuilder<Schema>;
 
     contains<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema>;
+    ): IFilterBuilder<Schema>;
 
-    exists(propName: keyof Schema): IBuilder<Schema>;
-    notExists(propName: keyof Schema): IBuilder<Schema>;
+    exists(propName: keyof Schema): IFilterBuilder<Schema>;
+    notExists(propName: keyof Schema): IFilterBuilder<Schema>;
 
     beginsWith<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema>;
+    ): IFilterBuilder<Schema>;
 
     where<PropName extends keyof Schema>(
         propName: PropName,
         comparator: Comparator,
         value: Schema[PropName]
-    ): IBuilder<Schema>;
-    where(query: Query<Schema>): IBuilder<Schema>;
+    ): IFilterBuilder<Schema>;
+    where(query: Query<Schema>): IFilterBuilder<Schema>;
 
     whereOr<PropName extends keyof Schema>(
         propName: PropName,
         comparator: Comparator,
         value: Schema[PropName]
-    ): IBuilder<Schema>;
-    whereOr(query: Query<Schema>): IBuilder<Schema>;
+    ): IFilterBuilder<Schema>;
+    whereOr(query: Query<Schema>): IFilterBuilder<Schema>;
 
     toQuery(): IMicroCMSQuery<Schema>;
+
+    readonly condition?: ICondition<Schema>;
 }
 
-export type Query<Schema> = (b: IBuilder<Schema>) => IBuilder<Schema>;
+export type Query<Schema> = (
+    b: IFilterBuilder<Schema>
+) => IFilterBuilder<Schema>;

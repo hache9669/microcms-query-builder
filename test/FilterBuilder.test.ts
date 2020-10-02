@@ -1,14 +1,14 @@
 import * as moment from "moment";
 
-import Builder from "../src/Builder";
+import FilterBuilder from "../src/FilterBuilder";
 import IMicroCMSQuery from "../src/types/IMicroCMSQuery";
 import SampleInterface from "./interface";
 
-describe("test Builder class", () => {
-    let builder: Builder<SampleInterface>;
+describe("test FilterBuilder class", () => {
+    let builder: FilterBuilder<SampleInterface>;
 
     beforeEach(() => {
-        builder = new Builder<SampleInterface>();
+        builder = new FilterBuilder<SampleInterface>();
     });
 
     describe("test each WHERE methods with number prop", () => {
@@ -18,7 +18,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: 1,
                 },
             };
@@ -31,7 +31,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: 1,
                 },
             };
@@ -44,7 +44,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: 1,
                 },
             };
@@ -57,7 +57,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: 1,
                 },
             };
@@ -70,7 +70,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: 1,
                 },
             };
@@ -83,7 +83,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -95,7 +95,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -107,7 +107,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.BeginsWith,
+                    comparator: FilterBuilder.BeginsWith,
                     value: 1,
                 },
             };
@@ -120,7 +120,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: 1,
                 },
             };
@@ -133,7 +133,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: 1,
                 },
             };
@@ -148,7 +148,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: "some_text",
                 },
             };
@@ -161,7 +161,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: "some_text",
                 },
             };
@@ -174,7 +174,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: "some_text",
                 },
             };
@@ -187,7 +187,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: "some_text",
                 },
             };
@@ -200,7 +200,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: "some_text",
                 },
             };
@@ -213,7 +213,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -225,7 +225,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -237,7 +237,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.BeginsWith,
+                    comparator: FilterBuilder.BeginsWith,
                     value: "some_text",
                 },
             };
@@ -250,7 +250,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: "some_text",
                 },
             };
@@ -263,7 +263,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: "some_text",
                 },
             };
@@ -278,7 +278,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: true,
                 },
             };
@@ -291,7 +291,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: true,
                 },
             };
@@ -304,7 +304,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: true,
                 },
             };
@@ -317,7 +317,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: true,
                 },
             };
@@ -330,7 +330,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: true,
                 },
             };
@@ -343,7 +343,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -355,7 +355,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -367,7 +367,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.BeginsWith,
+                    comparator: FilterBuilder.BeginsWith,
                     value: true,
                 },
             };
@@ -380,7 +380,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: true,
                 },
             };
@@ -393,7 +393,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: true,
                 },
             };
@@ -410,7 +410,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -425,7 +425,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -440,7 +440,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -455,7 +455,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -470,7 +470,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -483,7 +483,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -495,7 +495,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -509,7 +509,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.BeginsWith,
+                    comparator: FilterBuilder.BeginsWith,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -524,7 +524,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -539,7 +539,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -554,7 +554,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: moment("2020-01-01"),
                 },
             };
@@ -569,7 +569,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: moment("2020-01-01"),
                 },
             };
@@ -584,7 +584,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: moment("2020-01-01"),
                 },
             };
@@ -599,7 +599,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: moment("2020-01-01"),
                 },
             };
@@ -614,7 +614,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: moment("2020-01-01"),
                 },
             };
@@ -627,7 +627,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -639,7 +639,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -653,7 +653,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.BeginsWith,
+                    comparator: FilterBuilder.BeginsWith,
                     value: moment("2020-01-01"),
                 },
             };
@@ -668,7 +668,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: moment("2020-01-01"),
                 },
             };
@@ -683,7 +683,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: moment("2020-01-01"),
                 },
             };
@@ -698,7 +698,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "obj",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: { id: "some_id" },
                 },
             };
@@ -753,7 +753,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "obj",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: { id: "some_id" },
                 },
             };
@@ -768,7 +768,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "obj",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: { id: "some_id" },
                 },
             };
@@ -820,7 +820,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "arr",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: [{ id: "some_id1" }, { id: "some_id2" }],
                 },
             };
@@ -847,7 +847,7 @@ describe("test Builder class", () => {
 
         test("where", () => {
             const query = builder
-                .where("arr", Builder.Contains, [
+                .where("arr", FilterBuilder.Contains, [
                     { id: "some_id1" },
                     { id: "some_id2" },
                 ])
@@ -856,7 +856,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "arr",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: [{ id: "some_id1" }, { id: "some_id2" }],
                 },
             };
@@ -865,7 +865,7 @@ describe("test Builder class", () => {
 
         test("whereOr", () => {
             const query = builder
-                .whereOr("arr", Builder.Contains, [
+                .whereOr("arr", FilterBuilder.Contains, [
                     { id: "some_id1" },
                     { id: "some_id2" },
                 ])
@@ -874,7 +874,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "arr",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: [{ id: "some_id1" }, { id: "some_id2" }],
                 },
             };

@@ -1,68 +1,68 @@
 import * as Comparator from "./Comparator";
-import IBuilder, { Query } from "./types/IBuilder";
+import MicroCMSQuery from "./MicroCMSQuery";
+import IFilterBuilder, { Query } from "./types/IFilterBuilder";
 import IMicroCMSQuery, {
     ICondition,
     IMultipleCondition,
     isCondition,
     ISingleCondition,
-    Order,
 } from "./types/IMicroCMSQuery";
 
-export default class Builder<Schema> implements IBuilder<Schema> {
+export default class FilterBuilder<Schema> implements IFilterBuilder<Schema> {
     // #region Filter Methods
     public equals<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema> {
-        this.addCondition(propName, Builder.Equal, value);
+    ): IFilterBuilder<Schema> {
+        this.addCondition(propName, FilterBuilder.Equal, value);
         return this;
     }
     public notEquals<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema> {
-        this.addCondition(propName, Builder.NotEqual, value);
+    ): IFilterBuilder<Schema> {
+        this.addCondition(propName, FilterBuilder.NotEqual, value);
         return this;
     }
     public lessThan<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema> {
-        this.addCondition(propName, Builder.LessThan, value);
+    ): IFilterBuilder<Schema> {
+        this.addCondition(propName, FilterBuilder.LessThan, value);
         return this;
     }
     public greaterThan<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema> {
-        this.addCondition(propName, Builder.GreaterThan, value);
+    ): IFilterBuilder<Schema> {
+        this.addCondition(propName, FilterBuilder.GreaterThan, value);
         return this;
     }
     public contains<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema> {
-        this.addCondition(propName, Builder.Contains, value);
+    ): IFilterBuilder<Schema> {
+        this.addCondition(propName, FilterBuilder.Contains, value);
         return this;
     }
     public exists<PropName extends keyof Schema>(
         propName: PropName
-    ): IBuilder<Schema> {
+    ): IFilterBuilder<Schema> {
         const newCondition: ISingleCondition<Schema, PropName> = {
             type: "SINGLE",
             field: propName,
-            comparator: Builder.Exists,
+            comparator: FilterBuilder.Exists,
         };
         this.addCondition(newCondition);
         return this;
     }
     public notExists<PropName extends keyof Schema>(
         propName: PropName
-    ): IBuilder<Schema> {
+    ): IFilterBuilder<Schema> {
         const newCondition: ISingleCondition<Schema, PropName> = {
             type: "SINGLE",
             field: propName,
-            comparator: Builder.NotExists,
+            comparator: FilterBuilder.NotExists,
         };
         this.addCondition(newCondition);
         return this;
@@ -70,8 +70,8 @@ export default class Builder<Schema> implements IBuilder<Schema> {
     public beginsWith<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
-    ): IBuilder<Schema> {
-        this.addCondition(propName, Builder.BeginsWith, value);
+    ): IFilterBuilder<Schema> {
+        this.addCondition(propName, FilterBuilder.BeginsWith, value);
         return this;
     }
 
@@ -79,7 +79,7 @@ export default class Builder<Schema> implements IBuilder<Schema> {
         first: PropName | Query<Schema>,
         second?: Comparator.Comparator,
         third?: Schema[PropName]
-    ): IBuilder<Schema> {
+    ): IFilterBuilder<Schema> {
         throw new Error("Method not implemented.");
     }
 
@@ -87,45 +87,10 @@ export default class Builder<Schema> implements IBuilder<Schema> {
         first: PropName | Query<Schema>,
         second?: Comparator.Comparator,
         third?: Schema[PropName]
-    ): IBuilder<Schema> {
+    ): IFilterBuilder<Schema> {
         throw new Error("Method not implemented.");
     }
     //#endregion Filter Methods
-
-    //#region Other Queries
-    // @TODO rename functions
-    public draftKey(value?: string) {
-        this._query.draftKey = value;
-    }
-    public limit(value?: number) {
-        this._query.limit = value;
-    }
-    public offset(value?: number) {
-        this._query.offset = value;
-    }
-    public orders(value?: Order<Schema>[]) {
-        this._query.orders = value;
-    }
-    public q(value?: string) {
-        this._query.q = value;
-    }
-    public fields(value?: Array<keyof Schema>) {
-        this._query.fields = value;
-    }
-    public ids(value?: string[]) {
-        this._query.ids = value;
-    }
-    public filters(value?: ICondition<Schema>) {
-        if (value) {
-            this.addCondition(value);
-        } else {
-            this._query.filters = value;
-        }
-    }
-    public depth(value?: 1 | 2 | 3) {
-        this._query.depth = value;
-    }
-    //#endregion Other Queries
 
     //#region Filter Utils
 
@@ -172,11 +137,11 @@ export default class Builder<Schema> implements IBuilder<Schema> {
             return;
         }
 
-        const oldCondition = this._query.filters;
+        const oldCondition = this._condition;
         if (!oldCondition) {
-            this._query.filters = newCondition;
+            this._condition = newCondition;
         } else {
-            this._query.filters = this.mergeConditions(
+            this._condition = this.mergeConditions(
                 oldCondition,
                 newCondition,
                 "and"
@@ -206,11 +171,17 @@ export default class Builder<Schema> implements IBuilder<Schema> {
     };
     //#endregion Filter Utils
 
-    public toQuery(): IMicroCMSQuery<Schema> {
-        return this._query;
+    private _condition?: ICondition<Schema>;
+    get condition(): ICondition<Schema> | undefined {
+        return this._condition;
     }
 
-    private _query: IMicroCMSQuery<Schema> = {};
+    public toQuery(): IMicroCMSQuery<Schema> {
+        const query = new MicroCMSQuery<Schema>();
+        query.filters = this._condition;
+        return query;
+    }
+
     public static Equal: Comparator.MultiArgComparator = "equals";
     public static NotEqual: Comparator.MultiArgComparator = "not_equals";
     public static GreaterThan: Comparator.MultiArgComparator = "greater_than";
