@@ -6,7 +6,6 @@ import IFilterBuilder, {
     PrimitiveOnly,
     PrimitiveOrArray,
     PrimitiveOrObject,
-    Query,
 } from "./types/IFilterBuilder";
 import IMicroCMSQuery, {
     ICondition,
@@ -14,9 +13,7 @@ import IMicroCMSQuery, {
     isCondition,
     ISingleCondition,
 } from "./types/IMicroCMSQuery";
-import IMicroCMSSearchable, {
-    IMicroCMSPrimitiveLike,
-} from "./types/IMicroCMSSearchable";
+import IMicroCMSSearchable from "./types/IMicroCMSSearchable";
 
 export default class FilterBuilder<Schema extends IMicroCMSSearchable>
     implements IFilterBuilder<Schema> {
