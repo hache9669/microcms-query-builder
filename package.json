@@ -1,5 +1,5 @@
 {
-  "name": "@hache9669/my-first-npm-module",
+  "name": "microcms-query-builder",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hache9669/my-first-npm-module.git"
+    "url": "git+https://github.com/hache9669/microcms-query-builder.git"
   },
   "keywords": [
     "tutorial"
@@ -20,9 +20,9 @@
   "author": "hache9669",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hache9669/my-first-npm-module/issues"
+    "url": "https://github.com/hache9669/microcms-query-builder/issues"
   },
-  "homepage": "https://github.com/hache9669/my-first-npm-module#readme",
+  "homepage": "https://github.com/hache9669/microcms-query-builder#readme",
   "devDependencies": {
     "@types/jest": "^26.0.10",
     "@typescript-eslint/eslint-plugin": "^3.9.1",
