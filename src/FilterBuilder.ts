@@ -7,8 +7,10 @@ import IMicroCMSQuery, {
     isCondition,
     ISingleCondition,
 } from "./types/IMicroCMSQuery";
+import IMicroCMSSearchable from "./types/IMicroCMSSearchable";
 
-export default class FilterBuilder<Schema> implements IFilterBuilder<Schema> {
+export default class FilterBuilder<Schema extends IMicroCMSSearchable>
+    implements IFilterBuilder<Schema> {
     // #region Filter Methods
     public equals<PropName extends keyof Schema>(
         propName: PropName,

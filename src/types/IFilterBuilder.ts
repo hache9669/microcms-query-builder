@@ -1,6 +1,7 @@
 import IMicroCMSQuery, { ICondition } from "./IMicroCMSQuery";
+import IMicroCMSSearchable from "./IMicroCMSSearchable";
 
-export default interface IFilterBuilder<Schema> {
+export default interface IFilterBuilder<Schema extends IMicroCMSSearchable> {
     equals<PropName extends keyof Schema>(
         propName: PropName,
         value: Schema[PropName]
@@ -39,6 +40,6 @@ export default interface IFilterBuilder<Schema> {
     readonly condition?: ICondition<Schema>;
 }
 
-export type Query<Schema> = (
+export type Query<Schema extends IMicroCMSSearchable> = (
     b: IFilterBuilder<Schema>
 ) => IFilterBuilder<Schema>;
