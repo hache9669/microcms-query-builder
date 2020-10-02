@@ -1,5 +1,7 @@
 import IMicroCMSQuery, { ICondition } from "./IMicroCMSQuery";
-import IMicroCMSSearchable from "./IMicroCMSSearchable";
+import IMicroCMSSearchable, {
+    IMicroCMSPrimitiveLike,
+} from "./IMicroCMSSearchable";
 
 export default interface IFilterBuilder<Schema extends IMicroCMSSearchable> {
     equals<PropName extends keyof Schema>(
@@ -43,3 +45,22 @@ export default interface IFilterBuilder<Schema extends IMicroCMSSearchable> {
 export type Query<Schema extends IMicroCMSSearchable> = (
     b: IFilterBuilder<Schema>
 ) => IFilterBuilder<Schema>;
+
+export type PrimitiveOnly<
+    Schema extends IMicroCMSSearchable,
+    PropName extends keyof Schema
+> = Schema[PropName] extends IMicroCMSPrimitiveLike ? PropName : never;
+
+export type PrimitiveOrObject<
+    Schema extends IMicroCMSSearchable,
+    PropName extends keyof Schema
+> = Schema[PropName] extends IMicroCMSPrimitiveLike | IMicroCMSSearchable
+    ? PropName
+    : never;
+
+export type PrimitiveOrArray<
+    Schema extends IMicroCMSSearchable,
+    PropName extends keyof Schema
+> = Schema[PropName] extends IMicroCMSPrimitiveLike | Array<IMicroCMSSearchable>
+    ? PropName
+    : never;

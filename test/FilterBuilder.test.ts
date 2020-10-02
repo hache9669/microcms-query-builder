@@ -566,84 +566,9 @@ describe("test FilterBuilder class", () => {
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
         });
-
-        test("notEquals", () => {
-            const buildQuery = () =>
-                builder.notEquals("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("lessThan", () => {
-            const buildQuery = () =>
-                builder.lessThan("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("greaterThan", () => {
-            const buildQuery = () =>
-                builder.greaterThan("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("contains", () => {
-            const buildQuery = () =>
-                builder.contains("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("exists", () => {
-            const buildQuery = () => builder.exists("obj").toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("notExists", () => {
-            const buildQuery = () => builder.notExists("obj").toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("beginsWith", () => {
-            const buildQuery = () =>
-                builder.beginsWith("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
     });
 
-    describe("test each WHERE methods with Object prop", () => {
-        test("equals", () => {
-            const buildQuery = () =>
-                builder
-                    .equals("arr", [{ id: "some_id1" }, { id: "some_id2" }])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("notEquals", () => {
-            const buildQuery = () =>
-                builder
-                    .notEquals("arr", [{ id: "some_id1" }, { id: "some_id2" }])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("lessThan", () => {
-            const buildQuery = () =>
-                builder
-                    .lessThan("arr", [{ id: "some_id1" }, { id: "some_id2" }])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("greaterThan", () => {
-            const buildQuery = () =>
-                builder
-                    .greaterThan("arr", [
-                        { id: "some_id1" },
-                        { id: "some_id2" },
-                    ])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
+    describe("test each WHERE methods with Array prop", () => {
         test("contains", () => {
             const query = builder
                 .contains("arr", [{ id: "some_id1" }, { id: "some_id2" }])
@@ -657,24 +582,6 @@ describe("test FilterBuilder class", () => {
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("exists", () => {
-            const buildQuery = () => builder.exists("arr").toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("notExists", () => {
-            const buildQuery = () => builder.notExists("arr").toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("beginsWith", () => {
-            const buildQuery = () =>
-                builder
-                    .beginsWith("arr", [{ id: "some_id1" }, { id: "some_id2" }])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
         });
     });
 });

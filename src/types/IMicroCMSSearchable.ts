@@ -5,14 +5,17 @@ import * as moment from "moment";
  */
 interface IMicroCMSSearchable {
     [p: string]:
-        | string
-        | number
-        | boolean
-        | moment.Moment
-        | Date
+        | IMicroCMSPrimitiveLike
         | IMicroCMSReferableObject
         | IMicroCMSReferableObject[];
 }
+
+export type IMicroCMSPrimitiveLike =
+    | string
+    | number
+    | boolean
+    | moment.Moment
+    | Date;
 
 interface IMicroCMSReferableObject {
     id: string;
