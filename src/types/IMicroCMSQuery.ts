@@ -1,10 +1,11 @@
 import { MultiArgComparator, SingleArgComparator } from "../Comparator";
+import IMicroCMSSearchable from "./IMicroCMSSearchable";
 
 /**
  * microCMS list endpoint
  * GET /api/v1/{endpoint}?{query.toString()}
  */
-export default interface IMicroCMSQuery<Schema> {
+export default interface IMicroCMSQuery<Schema extends IMicroCMSSearchable> {
     draftKey?: string;
     limit?: number;
     offset?: number;

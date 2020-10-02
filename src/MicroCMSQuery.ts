@@ -7,8 +7,10 @@ import IMicroCMSQuery, {
     ISingleCondition,
     Order,
 } from "./types/IMicroCMSQuery";
+import IMicroCMSSearchable from "./types/IMicroCMSSearchable";
 
-export default class MicroCMSQuery<T> implements IMicroCMSQuery<T> {
+export default class MicroCMSQuery<T extends IMicroCMSSearchable>
+    implements IMicroCMSQuery<T> {
     private _draftKey?: string;
     private _limit?: number;
     private _offset?: number;

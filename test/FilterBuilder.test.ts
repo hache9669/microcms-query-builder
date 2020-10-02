@@ -1,14 +1,14 @@
 import * as moment from "moment";
 
-import Builder from "../src/Builder";
+import FilterBuilder from "../src/FilterBuilder";
 import IMicroCMSQuery from "../src/types/IMicroCMSQuery";
 import SampleInterface from "./interface";
 
-describe("test Builder class", () => {
-    let builder: Builder<SampleInterface>;
+describe("test FilterBuilder class", () => {
+    let builder: FilterBuilder<SampleInterface>;
 
     beforeEach(() => {
-        builder = new Builder<SampleInterface>();
+        builder = new FilterBuilder<SampleInterface>();
     });
 
     describe("test each WHERE methods with number prop", () => {
@@ -18,7 +18,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: 1,
                 },
             };
@@ -31,7 +31,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: 1,
                 },
             };
@@ -44,7 +44,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: 1,
                 },
             };
@@ -57,7 +57,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: 1,
                 },
             };
@@ -70,7 +70,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: 1,
                 },
             };
@@ -83,7 +83,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -95,7 +95,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -107,33 +107,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "num",
-                    comparator: Builder.BeginsWith,
-                    value: 1,
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("where", () => {
-            const query = builder.where("num", "=", 1).toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "num",
-                    comparator: Builder.Equal,
-                    value: 1,
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder.whereOr("num", "=", 1).toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "num",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.BeginsWith,
                     value: 1,
                 },
             };
@@ -148,7 +122,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: "some_text",
                 },
             };
@@ -161,7 +135,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: "some_text",
                 },
             };
@@ -174,7 +148,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: "some_text",
                 },
             };
@@ -187,7 +161,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: "some_text",
                 },
             };
@@ -200,7 +174,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: "some_text",
                 },
             };
@@ -213,7 +187,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -225,7 +199,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -237,33 +211,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "str",
-                    comparator: Builder.BeginsWith,
-                    value: "some_text",
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("where", () => {
-            const query = builder.where("str", "=", "some_text").toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "str",
-                    comparator: Builder.Equal,
-                    value: "some_text",
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder.whereOr("str", "=", "some_text").toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "str",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.BeginsWith,
                     value: "some_text",
                 },
             };
@@ -278,7 +226,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: true,
                 },
             };
@@ -291,7 +239,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: true,
                 },
             };
@@ -304,7 +252,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: true,
                 },
             };
@@ -317,7 +265,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: true,
                 },
             };
@@ -330,7 +278,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: true,
                 },
             };
@@ -343,7 +291,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -355,7 +303,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -367,33 +315,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "bol",
-                    comparator: Builder.BeginsWith,
-                    value: true,
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("where", () => {
-            const query = builder.where("bol", "=", true).toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "bol",
-                    comparator: Builder.Equal,
-                    value: true,
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder.whereOr("bol", "=", true).toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "bol",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.BeginsWith,
                     value: true,
                 },
             };
@@ -410,7 +332,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -425,7 +347,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -440,7 +362,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -455,7 +377,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -470,7 +392,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -483,7 +405,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -495,7 +417,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -509,37 +431,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "dat",
-                    comparator: Builder.BeginsWith,
-                    value: new Date("2020-01-01"),
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("where", () => {
-            const query = builder
-                .where("dat", "=", new Date("2020-01-01"))
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "dat",
-                    comparator: Builder.Equal,
-                    value: new Date("2020-01-01"),
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder
-                .whereOr("dat", "=", new Date("2020-01-01"))
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "dat",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.BeginsWith,
                     value: new Date("2020-01-01"),
                 },
             };
@@ -554,7 +446,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: moment("2020-01-01"),
                 },
             };
@@ -569,7 +461,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.NotEqual,
+                    comparator: FilterBuilder.NotEqual,
                     value: moment("2020-01-01"),
                 },
             };
@@ -584,7 +476,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.LessThan,
+                    comparator: FilterBuilder.LessThan,
                     value: moment("2020-01-01"),
                 },
             };
@@ -599,7 +491,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.GreaterThan,
+                    comparator: FilterBuilder.GreaterThan,
                     value: moment("2020-01-01"),
                 },
             };
@@ -614,7 +506,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: moment("2020-01-01"),
                 },
             };
@@ -627,7 +519,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.Exists,
+                    comparator: FilterBuilder.Exists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -639,7 +531,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.NotExists,
+                    comparator: FilterBuilder.NotExists,
                 },
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
@@ -653,37 +545,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "mom",
-                    comparator: Builder.BeginsWith,
-                    value: moment("2020-01-01"),
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("where", () => {
-            const query = builder
-                .where("mom", "=", moment("2020-01-01"))
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "mom",
-                    comparator: Builder.Equal,
-                    value: moment("2020-01-01"),
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder
-                .whereOr("mom", "=", moment("2020-01-01"))
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "mom",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.BeginsWith,
                     value: moment("2020-01-01"),
                 },
             };
@@ -698,77 +560,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "obj",
-                    comparator: Builder.Equal,
-                    value: { id: "some_id" },
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("notEquals", () => {
-            const buildQuery = () =>
-                builder.notEquals("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("lessThan", () => {
-            const buildQuery = () =>
-                builder.lessThan("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("greaterThan", () => {
-            const buildQuery = () =>
-                builder.greaterThan("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("contains", () => {
-            const buildQuery = () =>
-                builder.contains("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("exists", () => {
-            const buildQuery = () => builder.exists("obj").toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("notExists", () => {
-            const buildQuery = () => builder.notExists("obj").toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("beginsWith", () => {
-            const buildQuery = () =>
-                builder.beginsWith("obj", { id: "some_id" }).toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("where", () => {
-            const query = builder
-                .where("obj", "=", { id: "some_id" })
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "obj",
-                    comparator: Builder.Equal,
-                    value: { id: "some_id" },
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder
-                .whereOr("obj", "=", { id: "some_id" })
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "obj",
-                    comparator: Builder.Equal,
+                    comparator: FilterBuilder.Equal,
                     value: { id: "some_id" },
                 },
             };
@@ -776,42 +568,7 @@ describe("test Builder class", () => {
         });
     });
 
-    describe("test each WHERE methods with Object prop", () => {
-        test("equals", () => {
-            const buildQuery = () =>
-                builder
-                    .equals("arr", [{ id: "some_id1" }, { id: "some_id2" }])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("notEquals", () => {
-            const buildQuery = () =>
-                builder
-                    .notEquals("arr", [{ id: "some_id1" }, { id: "some_id2" }])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("lessThan", () => {
-            const buildQuery = () =>
-                builder
-                    .lessThan("arr", [{ id: "some_id1" }, { id: "some_id2" }])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("greaterThan", () => {
-            const buildQuery = () =>
-                builder
-                    .greaterThan("arr", [
-                        { id: "some_id1" },
-                        { id: "some_id2" },
-                    ])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
+    describe("test each WHERE methods with Array prop", () => {
         test("contains", () => {
             const query = builder
                 .contains("arr", [{ id: "some_id1" }, { id: "some_id2" }])
@@ -820,61 +577,7 @@ describe("test Builder class", () => {
                 filters: {
                     type: "SINGLE",
                     field: "arr",
-                    comparator: Builder.Contains,
-                    value: [{ id: "some_id1" }, { id: "some_id2" }],
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("exists", () => {
-            const buildQuery = () => builder.exists("arr").toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("notExists", () => {
-            const buildQuery = () => builder.notExists("arr").toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("beginsWith", () => {
-            const buildQuery = () =>
-                builder
-                    .beginsWith("arr", [{ id: "some_id1" }, { id: "some_id2" }])
-                    .toQuery();
-            expect(buildQuery).toThrowError();
-        });
-
-        test("where", () => {
-            const query = builder
-                .where("arr", Builder.Contains, [
-                    { id: "some_id1" },
-                    { id: "some_id2" },
-                ])
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "arr",
-                    comparator: Builder.Contains,
-                    value: [{ id: "some_id1" }, { id: "some_id2" }],
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder
-                .whereOr("arr", Builder.Contains, [
-                    { id: "some_id1" },
-                    { id: "some_id2" },
-                ])
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "arr",
-                    comparator: Builder.Contains,
+                    comparator: FilterBuilder.Contains,
                     value: [{ id: "some_id1" }, { id: "some_id2" }],
                 },
             };
