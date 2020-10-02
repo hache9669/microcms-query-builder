@@ -74,22 +74,6 @@ export default class FilterBuilder<Schema> implements IFilterBuilder<Schema> {
         this.addCondition(propName, FilterBuilder.BeginsWith, value);
         return this;
     }
-
-    public where<PropName extends keyof Schema>(
-        first: PropName | Query<Schema>,
-        second?: Comparator.Comparator,
-        third?: Schema[PropName]
-    ): IFilterBuilder<Schema> {
-        throw new Error("Method not implemented.");
-    }
-
-    public whereOr<PropName extends keyof Schema>(
-        first: PropName | Query<Schema>,
-        second?: Comparator.Comparator,
-        third?: Schema[PropName]
-    ): IFilterBuilder<Schema> {
-        throw new Error("Method not implemented.");
-    }
     //#endregion Filter Methods
 
     //#region Filter Utils

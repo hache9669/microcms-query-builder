@@ -1,4 +1,3 @@
-import { Comparator } from "../Comparator";
 import IMicroCMSQuery, { ICondition } from "./IMicroCMSQuery";
 
 export default interface IFilterBuilder<Schema> {
@@ -34,20 +33,6 @@ export default interface IFilterBuilder<Schema> {
         propName: PropName,
         value: Schema[PropName]
     ): IFilterBuilder<Schema>;
-
-    where<PropName extends keyof Schema>(
-        propName: PropName,
-        comparator: Comparator,
-        value: Schema[PropName]
-    ): IFilterBuilder<Schema>;
-    where(query: Query<Schema>): IFilterBuilder<Schema>;
-
-    whereOr<PropName extends keyof Schema>(
-        propName: PropName,
-        comparator: Comparator,
-        value: Schema[PropName]
-    ): IFilterBuilder<Schema>;
-    whereOr(query: Query<Schema>): IFilterBuilder<Schema>;
 
     toQuery(): IMicroCMSQuery<Schema>;
 

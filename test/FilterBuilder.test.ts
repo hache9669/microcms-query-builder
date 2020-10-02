@@ -113,32 +113,6 @@ describe("test FilterBuilder class", () => {
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
         });
-
-        test("where", () => {
-            const query = builder.where("num", "=", 1).toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "num",
-                    comparator: FilterBuilder.Equal,
-                    value: 1,
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder.whereOr("num", "=", 1).toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "num",
-                    comparator: FilterBuilder.Equal,
-                    value: 1,
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
     });
 
     describe("test each WHERE methods with string prop", () => {
@@ -243,32 +217,6 @@ describe("test FilterBuilder class", () => {
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
         });
-
-        test("where", () => {
-            const query = builder.where("str", "=", "some_text").toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "str",
-                    comparator: FilterBuilder.Equal,
-                    value: "some_text",
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder.whereOr("str", "=", "some_text").toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "str",
-                    comparator: FilterBuilder.Equal,
-                    value: "some_text",
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
     });
 
     describe("test each WHERE methods with boolean prop", () => {
@@ -368,32 +316,6 @@ describe("test FilterBuilder class", () => {
                     type: "SINGLE",
                     field: "bol",
                     comparator: FilterBuilder.BeginsWith,
-                    value: true,
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("where", () => {
-            const query = builder.where("bol", "=", true).toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "bol",
-                    comparator: FilterBuilder.Equal,
-                    value: true,
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder.whereOr("bol", "=", true).toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "bol",
-                    comparator: FilterBuilder.Equal,
                     value: true,
                 },
             };
@@ -515,36 +437,6 @@ describe("test FilterBuilder class", () => {
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
         });
-
-        test("where", () => {
-            const query = builder
-                .where("dat", "=", new Date("2020-01-01"))
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "dat",
-                    comparator: FilterBuilder.Equal,
-                    value: new Date("2020-01-01"),
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder
-                .whereOr("dat", "=", new Date("2020-01-01"))
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "dat",
-                    comparator: FilterBuilder.Equal,
-                    value: new Date("2020-01-01"),
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
     });
 
     describe("test each WHERE methods with moment prop", () => {
@@ -659,36 +551,6 @@ describe("test FilterBuilder class", () => {
             };
             expect(query).toEqual(expect.objectContaining(expectedQuery));
         });
-
-        test("where", () => {
-            const query = builder
-                .where("mom", "=", moment("2020-01-01"))
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "mom",
-                    comparator: FilterBuilder.Equal,
-                    value: moment("2020-01-01"),
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder
-                .whereOr("mom", "=", moment("2020-01-01"))
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "mom",
-                    comparator: FilterBuilder.Equal,
-                    value: moment("2020-01-01"),
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
     });
 
     describe("test each WHERE methods with Object prop", () => {
@@ -743,36 +605,6 @@ describe("test FilterBuilder class", () => {
             const buildQuery = () =>
                 builder.beginsWith("obj", { id: "some_id" }).toQuery();
             expect(buildQuery).toThrowError();
-        });
-
-        test("where", () => {
-            const query = builder
-                .where("obj", "=", { id: "some_id" })
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "obj",
-                    comparator: FilterBuilder.Equal,
-                    value: { id: "some_id" },
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder
-                .whereOr("obj", "=", { id: "some_id" })
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "obj",
-                    comparator: FilterBuilder.Equal,
-                    value: { id: "some_id" },
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
         });
     });
 
@@ -843,42 +675,6 @@ describe("test FilterBuilder class", () => {
                     .beginsWith("arr", [{ id: "some_id1" }, { id: "some_id2" }])
                     .toQuery();
             expect(buildQuery).toThrowError();
-        });
-
-        test("where", () => {
-            const query = builder
-                .where("arr", FilterBuilder.Contains, [
-                    { id: "some_id1" },
-                    { id: "some_id2" },
-                ])
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "arr",
-                    comparator: FilterBuilder.Contains,
-                    value: [{ id: "some_id1" }, { id: "some_id2" }],
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
-        });
-
-        test("whereOr", () => {
-            const query = builder
-                .whereOr("arr", FilterBuilder.Contains, [
-                    { id: "some_id1" },
-                    { id: "some_id2" },
-                ])
-                .toQuery();
-            const expectedQuery: IMicroCMSQuery<SampleInterface> = {
-                filters: {
-                    type: "SINGLE",
-                    field: "arr",
-                    comparator: FilterBuilder.Contains,
-                    value: [{ id: "some_id1" }, { id: "some_id2" }],
-                },
-            };
-            expect(query).toEqual(expect.objectContaining(expectedQuery));
         });
     });
 });
