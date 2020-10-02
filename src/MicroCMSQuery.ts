@@ -1,6 +1,7 @@
 import * as qs from "query-string";
 
 import * as Comparator from "./Comparator";
+import { StringKey } from "./types/IFilterBuilder";
 import IMicroCMSQuery, {
     ICondition,
     IMultipleCondition,
@@ -9,16 +10,16 @@ import IMicroCMSQuery, {
 } from "./types/IMicroCMSQuery";
 import IMicroCMSSearchable from "./types/IMicroCMSSearchable";
 
-export default class MicroCMSQuery<T extends IMicroCMSSearchable>
-    implements IMicroCMSQuery<T> {
+export default class MicroCMSQuery<Schema extends IMicroCMSSearchable>
+    implements IMicroCMSQuery<Schema> {
     private _draftKey?: string;
     private _limit?: number;
     private _offset?: number;
-    private _orders?: { field: keyof T; sort: "asc" | "desc" }[];
+    private _orders?: { field: keyof Schema; sort: "asc" | "desc" }[];
     private _q?: string;
-    private _fields?: (keyof T)[];
+    private _fields?: StringKey<Schema>[];
     private _ids?: string[];
-    private _filters?: ICondition<T>;
+    private _filters?: ICondition<Schema>;
     private _depth?: 1 | 2 | 3;
 
     public get draftKey(): string | undefined {
@@ -43,12 +44,12 @@ export default class MicroCMSQuery<T extends IMicroCMSSearchable>
     }
 
     public get orders():
-        | { field: keyof T; sort: "asc" | "desc" }[]
+        | { field: keyof Schema; sort: "asc" | "desc" }[]
         | undefined {
         return this._orders;
     }
     public set orders(
-        arg: { field: keyof T; sort: "asc" | "desc" }[] | undefined
+        arg: { field: keyof Schema; sort: "asc" | "desc" }[] | undefined
     ) {
         this._orders = arg;
     }
@@ -60,10 +61,10 @@ export default class MicroCMSQuery<T extends IMicroCMSSearchable>
         this._q = arg;
     }
 
-    public get fields(): (keyof T)[] | undefined {
+    public get fields(): StringKey<Schema>[] | undefined {
         return this._fields;
     }
-    public set fields(arg: (keyof T)[] | undefined) {
+    public set fields(arg: StringKey<Schema>[] | undefined) {
         this._fields = arg;
     }
 
@@ -74,10 +75,10 @@ export default class MicroCMSQuery<T extends IMicroCMSSearchable>
         this._ids = arg;
     }
 
-    public get filters(): ICondition<T> | undefined {
+    public get filters(): ICondition<Schema> | undefined {
         return this._filters;
     }
-    public set filters(arg: ICondition<T> | undefined) {
+    public set filters(arg: ICondition<Schema> | undefined) {
         this._filters = arg;
     }
 
@@ -105,7 +106,7 @@ export default class MicroCMSQuery<T extends IMicroCMSSearchable>
                         self.findIndex((o) => o.field === order.field) === index
                 )
                 .map(
-                    (order: Order<T>) =>
+                    (order: Order<Schema>) =>
                         `${order.sort === "desc" ? "-" : ""}${order.field}`
                 ),
             q: this._q?.length ? this._q : undefined,
@@ -125,8 +126,8 @@ export default class MicroCMSQuery<T extends IMicroCMSSearchable>
     };
 
     private filtersToString: (
-        condition?: ICondition<T>
-    ) => string | undefined = (condition?: ICondition<T>) => {
+        condition?: ICondition<Schema>
+    ) => string | undefined = (condition?: ICondition<Schema>) => {
         if (!condition) {
             // filter is empty
             return undefined;
@@ -148,9 +149,9 @@ export default class MicroCMSQuery<T extends IMicroCMSSearchable>
     };
 
     private isMultipleCondition = (
-        arg: ICondition<T>
-    ): arg is IMultipleCondition<T> => arg.type === "MULTI";
-    private isSingleCondition = <U extends keyof T>(
-        arg: ICondition<T>
-    ): arg is ISingleCondition<T, U> => arg.type === "SINGLE";
+        arg: ICondition<Schema>
+    ): arg is IMultipleCondition<Schema> => arg.type === "MULTI";
+    private isSingleCondition = <U extends keyof Schema>(
+        arg: ICondition<Schema>
+    ): arg is ISingleCondition<Schema, U> => arg.type === "SINGLE";
 }

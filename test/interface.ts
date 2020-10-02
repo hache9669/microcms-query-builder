@@ -1,13 +1,13 @@
 import * as moment from "moment";
 
-import ISchema from "../src/types/IMicroCMSSearchable";
+import IMicroCMSSearchable from "../src/types/IMicroCMSSearchable";
 
-export default interface SampleInterface extends ISchema {
+export default interface SampleInterface extends IMicroCMSSearchable {
     num: number;
     str: string;
     bol: boolean;
     dat: Date;
     mom: moment.Moment;
-    obj: { id: string; [p: string]: any };
-    arr: Array<{ id: string; [p: string]: any }>;
+    obj: { id: string; [p: string]: string | number | boolean };
+    arr: Array<{ id: string; [p: string]: string | number | boolean }>;
 }

@@ -1,12 +1,9 @@
-import * as moment from "moment";
-
 import * as Comparator from "./Comparator";
 import MicroCMSQuery from "./MicroCMSQuery";
 import IFilterBuilder, {
     PrimitiveOnly,
     PrimitiveOrArray,
     PrimitiveOrObject,
-    Query,
 } from "./types/IFilterBuilder";
 import IMicroCMSQuery, {
     ICondition,
@@ -14,9 +11,7 @@ import IMicroCMSQuery, {
     isCondition,
     ISingleCondition,
 } from "./types/IMicroCMSQuery";
-import IMicroCMSSearchable, {
-    IMicroCMSPrimitiveLike,
-} from "./types/IMicroCMSSearchable";
+import IMicroCMSSearchable from "./types/IMicroCMSSearchable";
 
 export default class FilterBuilder<Schema extends IMicroCMSSearchable>
     implements IFilterBuilder<Schema> {
@@ -110,9 +105,7 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
      * add condition simply and combine with "and" operator
      * @param condition
      */
-    private addCondition<PropName extends keyof Schema>(
-        condition: ICondition<Schema>
-    ): void;
+    private addCondition(condition: ICondition<Schema>): void;
     /**
      * add condition simply and combine with "and" operator
      * @param first

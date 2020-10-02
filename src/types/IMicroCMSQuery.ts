@@ -49,12 +49,16 @@ export type ICondition<Schema> =
     | ISingleCondition<Schema, keyof Schema>
     | IMultipleCondition<Schema>;
 
-export const isCondition = <T>(arg: any): arg is ICondition<T> => {
-    return isMultipleCondition(arg) || isSingleCondition(arg);
+export const isCondition = <T>(arg: unknown): arg is ICondition<T> => {
+    return (
+        Object.prototype.hasOwnProperty.call(arg, "type") &&
+        (isMultipleCondition(arg as ICondition<T>) ||
+            isSingleCondition(arg as ICondition<T>))
+    );
 };
 
 export const isMultipleCondition = <T>(
-    arg: any
+    arg: ICondition<T>
 ): arg is IMultipleCondition<T> => {
     return (
         arg.type === "MULTI" &&
@@ -65,7 +69,7 @@ export const isMultipleCondition = <T>(
 };
 
 export const isSingleCondition = <T, K extends keyof T>(
-    arg: any
+    arg: ICondition<T>
 ): arg is ISingleCondition<T, K> => {
     return (
         arg.type === "SINGLE" &&
@@ -80,6 +84,7 @@ interface SampleInterface {
     bol: boolean;
 }
 
+// eslint-disable-next-line
 const condition: ICondition<SampleInterface> = {
     type: "MULTI",
     left: {

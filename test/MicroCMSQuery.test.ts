@@ -1,7 +1,8 @@
 import MicroCMSQuery from "../src/MicroCMSQuery";
 import IMicroCMSQuery, { ICondition } from "../src/types/IMicroCMSQuery";
+import IMicroCMSSearchable from "../src/types/IMicroCMSSearchable";
 
-interface SampleInterface {
+interface SampleInterface extends IMicroCMSSearchable {
     num: number;
     str: string;
 }
