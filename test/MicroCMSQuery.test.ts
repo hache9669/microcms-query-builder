@@ -1,5 +1,6 @@
 import MicroCMSQuery from "../src/MicroCMSQuery";
-import IMicroCMSQuery, { ICondition } from "../src/types/IMicroCMSQuery";
+import { IFilter } from "../src/types/IFilter";
+import IMicroCMSQuery from "../src/types/IMicroCMSQuery";
 import IMicroCMSSearchable from "../src/types/IMicroCMSSearchable";
 
 interface SampleInterface extends IMicroCMSSearchable {
@@ -46,7 +47,7 @@ describe("test MicroCMSQuery class", () => {
             expect(query.toString()).toEqual("ids=some_id1,some_id2");
         });
         test("filters", () => {
-            const filters: ICondition<SampleInterface> = {
+            const filters: IFilter<SampleInterface> = {
                 type: "SINGLE",
                 field: "num",
                 comparator: "=",

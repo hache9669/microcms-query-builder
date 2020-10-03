@@ -1,4 +1,5 @@
-import IMicroCMSQuery, { ICondition } from "./IMicroCMSQuery";
+import { IFilter } from "./IFilter";
+import IMicroCMSQuery from "./IMicroCMSQuery";
 import IMicroCMSSearchable, {
     IMicroCMSPrimitiveLike,
 } from "./IMicroCMSSearchable";
@@ -37,9 +38,8 @@ export default interface IFilterBuilder<Schema extends IMicroCMSSearchable> {
         value: Schema[PropName]
     ): IFilterBuilder<Schema>;
 
+    toFilter(): IFilter<Schema> | undefined;
     toQuery(): IMicroCMSQuery<Schema>;
-
-    readonly condition?: ICondition<Schema>;
 }
 
 export type Query<Schema extends IMicroCMSSearchable> = (

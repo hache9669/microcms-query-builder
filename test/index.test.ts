@@ -1,5 +1,5 @@
 import FilterBuilder from "../src/FilterBuilder";
-import { ICondition } from "../src/types/IMicroCMSQuery";
+import { IFilter } from "../src/types/IFilter";
 import SampleInterface from "./interface";
 
 describe("complex query", (): void => {
@@ -11,25 +11,35 @@ describe("complex query", (): void => {
 
     describe("chained query", () => {
         beforeEach(() => {
-            builder.equals("num", 1).notEquals("str", "hoge");
+            builder.equals("num", 1).notEquals("str", "hoge").exists("obj");
         });
-        const expectedFilter: ICondition<SampleInterface> = {
+        const expectedFilter: IFilter<SampleInterface> = {
             type: "MULTI",
             left: {
-                type: "SINGLE",
-                field: "num",
-                comparator: FilterBuilder.Equal,
-                value: 1,
+                type: "MULTI",
+                left: {
+                    type: "SINGLE",
+                    field: "num",
+                    comparator: FilterBuilder.Equal,
+                    value: 1,
+                },
+                right: {
+                    type: "SINGLE",
+                    field: "str",
+                    comparator: FilterBuilder.NotEqual,
+                    value: "hoge",
+                },
+                operator: "and",
             },
             right: {
                 type: "SINGLE",
-                field: "str",
-                comparator: FilterBuilder.NotEqual,
-                value: "hoge",
+                field: "obj",
+                comparator: FilterBuilder.Exists,
             },
             operator: "and",
         };
-        const expectedString = "(num[equals]1)[and](str[not_equals]hoge)";
+        const expectedString =
+            "((num[equals]1[and]str[not_equals]hoge)[and]obj[exists])";
 
         test("toQuery", () => {
             expect(builder.toQuery().filters).toMatchObject(expectedFilter);

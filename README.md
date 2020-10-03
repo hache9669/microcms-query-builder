@@ -3,10 +3,10 @@
   <a href="https://github.com/hache9669/microcms-query-builder/actions?query=workflow%3A%22Node.js+CI%22" target="_blank">
     <img alt="build status" src="https://github.com/hache9669/microcms-query-builder/workflows/build/badge.svg" />
   </a>
-  <a href="https://www.npmjs.com/package/@hache9669/microcms-query-builder" target="_blank">
+  <a href="https://www.npmjs.com/package/microcms-query-builder" target="_blank">
     <img alt="npm version" src="http://img.shields.io/npm/v/microcms-query-builder" />
   </a>
-  <a href="https://www.npmjs.com/package/@hache9669/microcms-query-builder" target="_blank">
+  <a href="https://www.npmjs.com/package/microcms-query-builder" target="_blank">
     <img alt="npm downloads" src="https://img.shields.io/npm/dt/microcms-query-builder" />
   </a>
   <a href="https://github.com/hache9669/microcms-query-builder/graphs/commit-activity" target="_blank">
@@ -20,7 +20,7 @@
 ### 🏠 [Homepage](https://github.com/hache9669/microcms-query-builder#readme)
 
 ## Motivation
-Want to use an Eloquent-like query builder on the Japanese headless CMS "[microCMS](https://microcms.io/)".
+Want to use an fully-typed Eloquent-like query builder on the Japanese headless CMS "[microCMS](https://microcms.io/)".
 
 ## Install
 ```sh
@@ -41,9 +41,79 @@ When you have those schema in your microCMS
 then
 
 ```ts
-import { FilterBuilder, MicroCMSQuery } from 'microcms-query-builder';
+import { 
+  FilterBuilder, 
+  MicroCMSQuery, 
+  IFilterBuilder, 
+  IMicroCMSQuery, 
+  IMicroCMSSearchable 
+} from 'microcms-query-builder';
 
-interface YourSchema {
+interface YourSchema extends IMicroCMSSearchable {
+  id: string;
+  name: string;
+  quantity: number;
+  flag: boolean;
+  createdAt: string;
+}
+
+const builder: IFilterBuilder = new FilterBuilder<YourSchema>();
+const query: IMicroCMSQuery = builder.equals('name', 'Bob')
+                     .exists('quantity')
+                     .equals('flag', true)
+                     .greaterThan('createdAt', '2020-01-01')
+                     .toQuery();
+
+const queryParams: string = query.toString();
+// => 'filters=(name[equals]Bob)[and](quantity[exists])[and](flag[equals]true)[and](createdAt[greaterThan]2020-01-01)'
+```
+
+## Class and Methods
+### MicroCMSQuery<YourSchema extends IMicroCMSSearchable> Class
+Class representing the query parameters to be passed to the microCMS list-endpoints.
+For more information, see [official document](https://microcms.io/docs/content-api/get-list-contents#h9ce528688c).
+
+#### setters
+All of properties are optional.
+- draftKey(arg: string | undefined)
+- limit(arg: number | undefined)
+- offset(arg: number | undefined)
+- orders(arg: { field: keyof YourSchema; sort: "asc" | "desc" }[] | undefined)
+- q(arg: string | undefined)
+- fields(arg: keyof YourSchema[] | undefined)
+- ids(arg: string[] | undefined)
+- filters(arg: IFilter<Schema> | undefined)
+  - Pass the filter object created by FilterBuilder class.
+- depth(arg: 1 | 2 | 3 | undefined)
+### toParam()
+Create query parameters as object.
+```ts
+axios.get('https://micro.microcms.io/api/v1/{endpoint}?', query.toParam());
+```
+#### toString()
+Create query parameters as string.
+```ts
+axios.get('https://micro.microcms.io/api/v1/{endpoint}?' + query.toString());
+```
+
+### FilterBuilder<YourSchema extends IMicroCMSSearchable> Class
+Class representing focused on "filters" property of query parameter.
+For more information, see [official document](https://microcms.io/docs/content-api/get-list-contents#hdebbdc8e86).
+
+#### where-clause methods
+- equals(propName, value)
+- notEquals(propName, value)
+- lessThan(propName, value)
+- greaterThan(propName, value)
+- contains(propName, value)
+- exists(propName)
+- notExists(propName)
+- beginsWith(propName, value)
+
+All `propName` and `value` are typed and chainable.
+
+```ts
+interface YourSchema extends IMicroCMSSearchable {
   id: string;
   name: string;
   quantity: number;
@@ -52,14 +122,31 @@ interface YourSchema {
 }
 
 const builder = new FilterBuilder<YourSchema>();
-const query = builder.equals('name', 'Bob')
-                     .exists('quantity')
-                     .equals('flag', true)
-                     .greaterThan('createdAt', '2020-01-01')
-                     .toQuery();
 
-const queryParams = query.toString();
-// => 'filters=(name[equals]Bob)[and](quantity[exists])[and](flag[equals]true)[and](createdAt[greaterThan]2020-01-01)'
+builder
+  .equals('name', 'Bob')        // => OK
+  .notEquals('quantity', '10')  // => NG (value must be a number)
+  .exists('notColumn');         // => NG (property 'notColumn' is not defined in YourSchema)
+```
+
+#### toFilter()
+Return filter object, which can be passed to MicroCMSQuery::filters.
+
+#### toQuery()
+Directly create a instance of MicroCMSQuery class. Note that it does not contain any other properties like limit, offset, or else.
+
+Each of these two processes has the same result;
+```ts
+const builder = new FilterBuilder<YourSchema>();
+const query = builder.equals('flag', true).toQuery();
+query.limit = 10;
+```
+or
+```ts
+const query = new MicroCMSQuery<YourSchema>();
+const builder = new FilterBuilder<YourSchema>();
+query.limit = 10;
+query.filters = builder.equals('flag', true).toFilter();
 ```
 
 ## Disclaimer
