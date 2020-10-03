@@ -1,6 +1,6 @@
 {
   "name": "microcms-query-builder",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "types": "./dist/index.d.ts",
@@ -15,7 +15,7 @@
     "url": "git+https://github.com/hache9669/microcms-query-builder.git"
   },
   "keywords": [
-    "tutorial"
+    "microCMS", "query", "builder"
   ],
   "author": "hache9669",
   "license": "MIT",
