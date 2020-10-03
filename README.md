@@ -3,10 +3,10 @@
   <a href="https://github.com/hache9669/microcms-query-builder/actions?query=workflow%3A%22Node.js+CI%22" target="_blank">
     <img alt="build status" src="https://github.com/hache9669/microcms-query-builder/workflows/build/badge.svg" />
   </a>
-  <a href="https://www.npmjs.com/package/@hache9669/microcms-query-builder" target="_blank">
+  <a href="https://www.npmjs.com/package/microcms-query-builder" target="_blank">
     <img alt="npm version" src="http://img.shields.io/npm/v/microcms-query-builder" />
   </a>
-  <a href="https://www.npmjs.com/package/@hache9669/microcms-query-builder" target="_blank">
+  <a href="https://www.npmjs.com/package/microcms-query-builder" target="_blank">
     <img alt="npm downloads" src="https://img.shields.io/npm/dt/microcms-query-builder" />
   </a>
   <a href="https://github.com/hache9669/microcms-query-builder/graphs/commit-activity" target="_blank">
