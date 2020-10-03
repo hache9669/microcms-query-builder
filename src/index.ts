@@ -7,6 +7,6 @@ import searchble from "./types/IMicroCMSSearchable";
 export const FilterBuilder = builder;
 export const MicroCMSQuery = query;
 
-export type IFilterBuilder<T> = ibuilder<T>;
-export type IMicroCMSQuery<T> = iquery<T>;
+export type IFilterBuilder<T extends searchble> = ibuilder<T>;
+export type IMicroCMSQuery<T extends searchble> = iquery<T>;
 export type IMicroCMSSearchable = searchble;
