@@ -1,8 +1,8 @@
 import * as moment from "moment";
 
-import ISchema from "../src/types/IMicroCMSSearchable";
+import IMicroCMSSearchable from "../src/types/IMicroCMSSearchable";
 
-export default interface SampleInterface extends ISchema {
+export default interface SampleInterface extends IMicroCMSSearchable {
     num: number;
     str: string;
     bol: boolean;
