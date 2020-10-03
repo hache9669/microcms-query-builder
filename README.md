@@ -41,9 +41,15 @@ When you have those schema in your microCMS
 then
 
 ```ts
-import { FilterBuilder, MicroCMSQuery } from 'microcms-query-builder';
+import { 
+  FilterBuilder, 
+  MicroCMSQuery, 
+  IFilterBuilder, 
+  IMicroCMSQuery, 
+  IMicroCMSSearchable 
+} from 'microcms-query-builder';
 
-interface YourSchema {
+interface YourSchema extends IMicroCMSSearchable {
   id: string;
   name: string;
   quantity: number;
@@ -51,14 +57,14 @@ interface YourSchema {
   createdAt: string;
 }
 
-const builder = new FilterBuilder<YourSchema>();
-const query = builder.equals('name', 'Bob')
+const builder: IFilterBuilder = new FilterBuilder<YourSchema>();
+const query: IMicroCMSQuery = builder.equals('name', 'Bob')
                      .exists('quantity')
                      .equals('flag', true)
                      .greaterThan('createdAt', '2020-01-01')
                      .toQuery();
 
-const queryParams = query.toString();
+const queryParams: string = query.toString();
 // => 'filters=(name[equals]Bob)[and](quantity[exists])[and](flag[equals]true)[and](createdAt[greaterThan]2020-01-01)'
 ```
 
