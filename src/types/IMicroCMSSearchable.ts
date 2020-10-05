@@ -1,8 +1,3 @@
-import * as moment from "moment";
-
-/**
- * @TODO moment, Dateはパース処理を実装すること
- */
 interface IMicroCMSSearchable {
     [p: string]:
         | IMicroCMSPrimitiveLike
@@ -10,12 +5,10 @@ interface IMicroCMSSearchable {
         | IMicroCMSReferableObject[];
 }
 
-export type IMicroCMSPrimitiveLike =
-    | string
-    | number
-    | boolean
-    | moment.Moment
-    | Date;
+export type IMicroCMSPrimitiveLike = string | number | boolean;
+// @TODO support Date-like types
+// | moment.Moment
+// | Date;
 
 interface IMicroCMSReferableObject {
     id: string;

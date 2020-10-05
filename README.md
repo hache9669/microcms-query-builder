@@ -100,14 +100,35 @@ axios.get('https://micro.microcms.io/api/v1/{endpoint}?' + query.toString());
 Class representing focused on "filters" property of query parameter.
 For more information, see [official document](https://microcms.io/docs/content-api/get-list-contents#hdebbdc8e86).
 
-#### equals
-#### notEquals
-#### lessThan
-#### greaterThan
-#### contains
-#### exists
-#### notExists
-#### beginsWith
+#### where-clause methods
+- equals(propName, value)
+- notEquals(propName, value)
+- lessThan(propName, value)
+- greaterThan(propName, value)
+- contains(propName, value)
+- exists(propName)
+- notExists(propName)
+- beginsWith(propName, value)
+
+All `propName` and `value` are typed and chainable.
+
+```ts
+interface YourSchema extends IMicroCMSSearchable {
+  id: string;
+  name: string;
+  quantity: number;
+  flag: boolean;
+  createdAt: string;
+}
+
+const builder = new FilterBuilder<YourSchema>();
+
+builder
+  .equals('name', 'Bob')        // => OK
+  .notEquals('quantity', '10')  // => NG (value must be a number)
+  .exists('notColumn');         // => NG (property 'notColumn' is not defined in YourSchema)
+```
+
 #### toFilter()
 Return filter object, which can be passed to MicroCMSQuery::filters.
 

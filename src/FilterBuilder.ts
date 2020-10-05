@@ -52,12 +52,6 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
         this.addCondition(propName, FilterBuilder.Contains, value);
         return this;
     }
-    /**
-     * @TODO プロパティの型が取得できないため、「コンテンツ参照では利用できない」が表現できない
-     * mapped typeを用いてビルダーを定義し直す？←メソッドチェインができない…
-     * builder.model.arr.exists() // type error
-     * @param propName
-     */
     public exists<PropName extends keyof Schema>(
         propName: PrimitiveOnly<Schema, PropName>
     ): IFilterBuilder<Schema> {
