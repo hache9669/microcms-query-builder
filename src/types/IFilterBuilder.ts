@@ -1,4 +1,5 @@
-import IMicroCMSQuery, { ICondition } from "./IMicroCMSQuery";
+import { IFilter } from "./IFilter";
+import IMicroCMSQuery from "./IMicroCMSQuery";
 import IMicroCMSSearchable, {
     IMicroCMSPrimitiveLike,
 } from "./IMicroCMSSearchable";

@@ -1,16 +1,17 @@
 import * as Comparator from "./Comparator";
 import MicroCMSQuery from "./MicroCMSQuery";
+import {
+    IFilter,
+    ILayeredFilter,
+    isFilter,
+    ISingleFilter,
+} from "./types/IFilter";
 import IFilterBuilder, {
     PrimitiveOnly,
     PrimitiveOrArray,
     PrimitiveOrObject,
 } from "./types/IFilterBuilder";
-import IMicroCMSQuery, {
-    ICondition,
-    IMultipleCondition,
-    isCondition,
-    ISingleCondition,
-} from "./types/IMicroCMSQuery";
+import IMicroCMSQuery from "./types/IMicroCMSQuery";
 import IMicroCMSSearchable from "./types/IMicroCMSSearchable";
 
 export default class FilterBuilder<Schema extends IMicroCMSSearchable>

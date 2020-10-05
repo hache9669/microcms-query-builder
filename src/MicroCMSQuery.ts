@@ -1,6 +1,7 @@
 import * as qs from "query-string";
 
 import * as Comparator from "./Comparator";
+import { IFilter, isLayeredFilter, isSingleFilter } from "./types/IFilter";
 import { StringKey } from "./types/IFilterBuilder";
 import IMicroCMSQuery, {
     IMicroCMSParamToSend,

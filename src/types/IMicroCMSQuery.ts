@@ -1,4 +1,4 @@
-import { MultiArgComparator, SingleArgComparator } from "../Comparator";
+import { IFilter } from "./IFilter";
 import IMicroCMSSearchable from "./IMicroCMSSearchable";
 
 export interface IMicroCMSParam<Schema extends IMicroCMSSearchable> {
