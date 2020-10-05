@@ -85,7 +85,7 @@ All of properties are optional.
 - filters(arg: IFilter<Schema> | undefined)
   - Pass the filter object created by FilterBuilder class.
 - depth(arg: 1 | 2 | 3 | undefined)
-### toParam()
+#### toParam()
 Create query parameters as object.
 ```ts
 axios.get('https://micro.microcms.io/api/v1/{endpoint}?', query.toParam());
