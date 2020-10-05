@@ -3,9 +3,7 @@ import * as qs from "query-string";
 import * as Comparator from "./Comparator";
 import { StringKey } from "./types/IFilterBuilder";
 import IMicroCMSQuery, {
-    ICondition,
-    IMultipleCondition,
-    ISingleCondition,
+    IMicroCMSParamToSend,
     Order,
 } from "./types/IMicroCMSQuery";
 import IMicroCMSSearchable from "./types/IMicroCMSSearchable";
@@ -89,7 +87,7 @@ export default class MicroCMSQuery<Schema extends IMicroCMSSearchable>
         this._depth = arg;
     }
 
-    public toString: () => string = () => {
+    public toParam: () => IMicroCMSParamToSend = () => {
         const queryObject = {
             draftKey: this._draftKey?.length ? this._draftKey : undefined,
             limit:
@@ -100,26 +98,24 @@ export default class MicroCMSQuery<Schema extends IMicroCMSSearchable>
                 undefined !== this._offset && this._offset >= 0
                     ? this._offset
                     : undefined,
-            orders: this._orders
-                ?.filter(
-                    (order, index, self) =>
-                        self.findIndex((o) => o.field === order.field) === index
-                )
-                .map(
-                    (order: Order<Schema>) =>
-                        `${order.sort === "desc" ? "-" : ""}${order.field}`
-                ),
+            orders: this.unique(
+                this._orders,
+                (a, b) => a.field === b.field
+            )?.map(
+                (order: Order<Schema>) =>
+                    `${order.sort === "desc" ? "-" : ""}${order.field}`
+            ),
             q: this._q?.length ? this._q : undefined,
-            fields: this._fields?.filter(
-                (field, index, self) => self.indexOf(field) === index
-            ),
-            ids: this._ids?.filter(
-                (id, index, self) => self.indexOf(id) === index
-            ),
+            fields: this.unique(this._fields),
+            ids: this.unique(this._ids),
             filters: this.filtersToString(this._filters),
             depth: this._depth,
         };
-        return qs.stringify(queryObject, {
+        return queryObject;
+    };
+
+    public toString: () => string = () => {
+        return qs.stringify(this.toParam(), {
             arrayFormat: "comma",
             encode: false,
         });
@@ -133,25 +129,42 @@ export default class MicroCMSQuery<Schema extends IMicroCMSSearchable>
             return undefined;
         }
 
-        if (this.isMultipleCondition(condition)) {
-            // filter is ICondition
+        if (isLayeredFilter(condition)) {
             const left = this.filtersToString(condition.left);
             const right = this.filtersToString(condition.right);
-            return `(${left})[${condition.operator}](${right})`;
+            return `(${left}[${condition.operator}]${right})`;
         }
 
-        if (this.isSingleCondition(condition)) {
-            // filter is ISingleCondition
-            return `${condition.field}[${Comparator.toString(
-                condition.comparator
-            )}]${condition.value}`;
+        if (isSingleFilter(condition)) {
+            if (Comparator.isSingleArgComparator(condition.comparator)) {
+                return `${condition.field}[${Comparator.toString(
+                    condition.comparator
+                )}]`;
+            } else {
+                return `${condition.field}[${Comparator.toString(
+                    condition.comparator
+                )}]${condition.value}`;
+            }
         }
     };
 
-    private isMultipleCondition = (
-        arg: ICondition<Schema>
-    ): arg is IMultipleCondition<Schema> => arg.type === "MULTI";
-    private isSingleCondition = <U extends keyof Schema>(
-        arg: ICondition<Schema>
-    ): arg is ISingleCondition<Schema, U> => arg.type === "SINGLE";
+    private unique<T>(
+        arr: Array<T> | undefined,
+        comparator?: (arg1: T, arg2: T) => boolean
+    ): Array<T> | undefined {
+        if (!arr) {
+            return undefined;
+        }
+
+        return arr.filter(
+            (value, index, self) =>
+                self.findIndex((e) => {
+                    if (comparator) {
+                        return comparator(e, value);
+                    } else {
+                        return e === value;
+                    }
+                }) === index
+        );
+    }
 }
