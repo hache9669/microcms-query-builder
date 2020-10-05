@@ -9,7 +9,7 @@ export interface IMicroCMSParam<Schema extends IMicroCMSSearchable> {
     q?: string;
     fields?: Array<keyof Schema>;
     ids?: string[];
-    filters?: ICondition<Schema>;
+    filters?: IFilter<Schema>;
     depth?: 1 | 2 | 3;
 }
 

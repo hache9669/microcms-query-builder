@@ -13,7 +13,7 @@ describe("complex query", (): void => {
         beforeEach(() => {
             builder.equals("num", 1).notEquals("str", "hoge").exists("obj");
         });
-        const expectedFilter: ICondition<SampleInterface> = {
+        const expectedFilter: IFilter<SampleInterface> = {
             type: "MULTI",
             left: {
                 type: "MULTI",

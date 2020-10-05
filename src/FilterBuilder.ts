@@ -61,7 +61,7 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
     public exists<PropName extends keyof Schema>(
         propName: PrimitiveOnly<Schema, PropName>
     ): IFilterBuilder<Schema> {
-        const newCondition: ISingleCondition<Schema, PropName> = {
+        const newCondition: ISingleFilter<Schema, PropName> = {
             type: "SINGLE",
             field: propName,
             comparator: FilterBuilder.Exists,
@@ -72,7 +72,7 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
     public notExists<PropName extends keyof Schema>(
         propName: PrimitiveOnly<Schema, PropName>
     ): IFilterBuilder<Schema> {
-        const newCondition: ISingleCondition<Schema, PropName> = {
+        const newCondition: ISingleFilter<Schema, PropName> = {
             type: "SINGLE",
             field: propName,
             comparator: FilterBuilder.NotExists,
@@ -106,7 +106,7 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
      * add condition simply and combine with "and" operator
      * @param condition
      */
-    private addCondition(condition: ICondition<Schema>): void;
+    private addCondition(condition: IFilter<Schema>): void;
     /**
      * add condition simply and combine with "and" operator
      * @param first
@@ -114,11 +114,11 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
      * @param third
      */
     private addCondition<PropName extends keyof Schema>(
-        first: PropName | ICondition<Schema>,
+        first: PropName | IFilter<Schema>,
         second?: Comparator.MultiArgComparator,
         third?: Schema[PropName]
     ): void {
-        let newCondition: ICondition<Schema>;
+        let newCondition: IFilter<Schema>;
         if (typeof first === "string" && second && third) {
             newCondition = {
                 type: "SINGLE",
@@ -126,7 +126,7 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
                 comparator: second,
                 value: third,
             };
-        } else if (isCondition(first)) {
+        } else if (isFilter(first)) {
             newCondition = first;
         } else {
             return;
@@ -153,10 +153,10 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
      * @param operator
      */
     private mergeConditions = (
-        left: ICondition<Schema>,
-        right: ICondition<Schema>,
+        left: IFilter<Schema>,
+        right: IFilter<Schema>,
         operator: "and" | "or"
-    ): IMultipleCondition<Schema> => {
+    ): ILayeredFilter<Schema> => {
         return {
             type: "MULTI",
             left,
@@ -166,8 +166,9 @@ export default class FilterBuilder<Schema extends IMicroCMSSearchable>
     };
     //#endregion Filter Utils
 
-    private _condition?: ICondition<Schema>;
-    get condition(): ICondition<Schema> | undefined {
+    private _condition?: IFilter<Schema>;
+
+    public toFilter(): IFilter<Schema> | undefined {
         return this._condition;
     }
 

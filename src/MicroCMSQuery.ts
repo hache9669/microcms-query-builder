@@ -18,7 +18,7 @@ export default class MicroCMSQuery<Schema extends IMicroCMSSearchable>
     private _q?: string;
     private _fields?: StringKey<Schema>[];
     private _ids?: string[];
-    private _filters?: ICondition<Schema>;
+    private _filters?: IFilter<Schema>;
     private _depth?: 1 | 2 | 3;
 
     public get draftKey(): string | undefined {
@@ -74,10 +74,10 @@ export default class MicroCMSQuery<Schema extends IMicroCMSSearchable>
         this._ids = arg;
     }
 
-    public get filters(): ICondition<Schema> | undefined {
+    public get filters(): IFilter<Schema> | undefined {
         return this._filters;
     }
-    public set filters(arg: ICondition<Schema> | undefined) {
+    public set filters(arg: IFilter<Schema> | undefined) {
         this._filters = arg;
     }
 
@@ -123,8 +123,8 @@ export default class MicroCMSQuery<Schema extends IMicroCMSSearchable>
     };
 
     private filtersToString: (
-        condition?: ICondition<Schema>
-    ) => string | undefined = (condition?: ICondition<Schema>) => {
+        condition?: IFilter<Schema>
+    ) => string | undefined = (condition?: IFilter<Schema>) => {
         if (!condition) {
             // filter is empty
             return undefined;
