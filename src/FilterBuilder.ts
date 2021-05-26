@@ -15,7 +15,8 @@ import IMicroCMSQuery from "./types/IMicroCMSQuery";
 import IMicroCMSSearchable from "./types/IMicroCMSSearchable";
 
 export default class FilterBuilder<Schema extends IMicroCMSSearchable>
-    implements IFilterBuilder<Schema> {
+    implements IFilterBuilder<Schema>
+{
     // #region Filter Methods
     public equals<PropName extends keyof Schema>(
         propName: PrimitiveOrObject<Schema, PropName>,

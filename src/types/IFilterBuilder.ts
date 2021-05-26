@@ -65,6 +65,5 @@ export type PrimitiveOrArray<
     ? PropName
     : never;
 
-export type StringKey<
-    Schema extends IMicroCMSSearchable
-> = keyof Schema extends string ? keyof Schema : never;
+export type StringKey<Schema extends IMicroCMSSearchable> =
+    keyof Schema extends string ? keyof Schema : never;

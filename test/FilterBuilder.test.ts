@@ -1,5 +1,3 @@
-import * as moment from "moment";
-
 import FilterBuilder from "../src/FilterBuilder";
 import { IMicroCMSParam } from "../src/types/IMicroCMSQuery";
 import SampleInterface from "./interface";

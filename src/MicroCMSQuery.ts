@@ -10,7 +10,8 @@ import IMicroCMSQuery, {
 import IMicroCMSSearchable from "./types/IMicroCMSSearchable";
 
 export default class MicroCMSQuery<Schema extends IMicroCMSSearchable>
-    implements IMicroCMSQuery<Schema> {
+    implements IMicroCMSQuery<Schema>
+{
     private _draftKey?: string;
     private _limit?: number;
     private _offset?: number;
