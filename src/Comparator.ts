@@ -58,7 +58,7 @@ const comparatorMap = new Map<Comparator, string>([
     [">", "greater_than"],
 ]);
 
-export const toString: (comparator: Comparator) => string = (
+export const toMicroCMSString: (comparator: Comparator) => string = (
     comparator: Comparator
 ) => {
     return comparatorMap.get(comparator) || comparator.toLocaleLowerCase();

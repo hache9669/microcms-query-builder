@@ -139,11 +139,11 @@ export default class MicroCMSQuery<Schema extends IMicroCMSSearchable>
 
         if (isSingleFilter(condition)) {
             if (Comparator.isSingleArgComparator(condition.comparator)) {
-                return `${condition.field}[${Comparator.toString(
+                return `${condition.field}[${Comparator.toMicroCMSString(
                     condition.comparator
                 )}]`;
             } else {
-                return `${condition.field}[${Comparator.toString(
+                return `${condition.field}[${Comparator.toMicroCMSString(
                     condition.comparator
                 )}]${condition.value}`;
             }

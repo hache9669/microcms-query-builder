@@ -1,20 +1,36 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:prettier/recommended",
-      "prettier/@typescript-eslint"
-  ],
-  "plugins": [
-      "@typescript-eslint",
-      "prettier",
-      "simple-import-sort"
-  ],
-  "rules": {
-      "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
-      "simple-import-sort/sort": "error"
-  },
-  "ignorePatterns": ["**/dist/*"]
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "eslint:recommended",
+        "prettier"
+    ],
+    "plugins": [
+        "@typescript-eslint",
+        "prettier",
+        "simple-import-sort",
+        "jest"
+    ],
+    "rules": {
+        "@typescript-eslint/explicit-function-return-type": [
+            "warn",
+            {
+                "allowExpressions": true
+            }
+        ],
+        "simple-import-sort/imports": "error",
+        "no-unused-vars": "off", // 型定義上での誤検出を回避(代替として@typescript-eslintを利用)
+        "@typescript-eslint/no-unused-vars": [
+            "error"
+        ],
+        "no-dupe-class-members": "off", // オーバーロードでの誤検出を回避(代替として@typescript-eslintを利用)
+        "@typescript-eslint/no-dupe-class-members": [
+            "error"
+        ]
+    },
+    "ignorePatterns": [
+        "**/dist/*"
+    ],
+    "env": {
+        "jest/globals": true
+    }
 }
